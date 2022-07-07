@@ -1,13 +1,8 @@
 import React from 'react';
-// import React, { Component } from 'react';
 import ".//../styles/_nav.css";
 
 import nav_logo from "../imgs/nav_logo.svg";
-// import { ReactComponent as logo } from '././imgs/nav_logo.svg';
-
 import nav_soul from "../imgs/nav_soul.svg";
-// import { ReactComponent as soul } from '././imgs/nav_soul.svg';
-
 
 
 const Nav = () => {

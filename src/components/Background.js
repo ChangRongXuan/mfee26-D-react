@@ -5,7 +5,6 @@ import bg_left_down from "../imgs/bg-left-down.svg";
 import bg_right_top from "../imgs/bg-right-top.svg";
 
 
-
 const Background = () => {
     return (
       <div className="view" style={{position: 'relative', zIndex: -100}}>
