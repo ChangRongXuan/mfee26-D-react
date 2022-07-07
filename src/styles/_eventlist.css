@@ -1,0 +1,50 @@
+.event-container{
+  width: 80%;
+  height: 75%;
+  margin: auto;
+  outline: 1px solid white;
+  color: black;
+  list-style: none;
+  position: absolute;
+
+}
+
+.col, ul{
+  padding: 0;
+}
+
+.event-container .row{
+  height: 100%;
+  padding: 0%;
+}
+
+.event-container li{
+  list-style: none;
+  background-color: white;
+  border-radius: 10px;
+  margin: 20px auto;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.event-container li:nth-child(1){
+  margin-left: auto;
+}
+
+.event-card{
+  width: 23%;
+  height: 48%;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.event{
+  display: flex;
+  flex-wrap: wrap;
+  align-content:space-between;
+  justify-content: space-between;
+  padding: 10px 30px;
+}
