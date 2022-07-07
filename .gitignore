@@ -2147,6 +2147,8 @@ src/imgs/weather/app-icons/icon@192.png
 src/imgs/weather/app-icons/icon@512.png
 src/imgs/weather/app-icons/launch.png
 src/styles/_weatherApp.css
+src/styles/_number.css
+public/lib/number.html
 src/WeatherApp.js
 src/Number.js
 package-lock.json
