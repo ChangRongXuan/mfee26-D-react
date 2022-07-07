@@ -14,17 +14,38 @@ body{
   overflow: hidden;
 }
 
-.bg-left{
+.bg-left-wave{
   position: absolute;
   bottom: 0px;
   left: 0px;
   width: 35%;
 }
 
-.bg-right{
+.bg-left-star{
+  position: absolute;
+  bottom: 0;
+  left: 0px;
+  width: 17%;
+}
+
+.bg-elf{
+  position: absolute;
+  bottom: 0;
+  left: 0px;
+  width: 11%;
+}
+
+.bg-right-wave{
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 32%;
-  min-width: 30%;
+  width: 28%;
 }
+
+.bg-right-star{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 23%;
+}
+
