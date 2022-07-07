@@ -1,17 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client"; //有引用ReactDOM才可進行render
+// import Background from "./components/Background";
+// import App from "./App";
+// import Nav from "./components/Nav";
+import Weather from "./WeatherApp";
+
+// 沒寫相對路徑 會直接在node module裡找
+
+
+function App() {
+  return(
+    <> 
+      <Weather/>
+      {/* <Nav/> */}
+      {/* <Background /> */}
+    </>
+  )
+}
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+root.render(<App />);
