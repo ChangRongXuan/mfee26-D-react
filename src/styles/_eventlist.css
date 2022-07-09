@@ -1,29 +1,50 @@
+/* 如果有引BS這段CSS可省略 */
+.col-2{
+  width: 16.666% !important;
+}
+.col-10{
+  width: 83.333% !important;
+}
+
+.row{
+  display: flex;
+}
+
+
+/* ------------------------ */
+
 .event-container{
-  width: 80%;
-  height: 75%;
+  width: 100%;
+  height: 85%;
   margin: auto;
-  outline: 1px solid white;
   color: black;
   list-style: none;
   position: absolute;
-
+  bottom:0;
 }
 
 .col, ul{
   padding: 0;
 }
 
-.event-container .row{
+.col{
   height: 100%;
-  padding: 0%;
 }
 
+.event-container .row{
+  width: 85%;
+  height: 90%;
+  margin: auto;
+  padding: 1px;
+}
+
+/* (左)下拉選單 */
 .event-container li{
   list-style: none;
   background-color: white;
   border-radius: 10px;
-  margin: 20px auto;
-  height: 35px;
+  margin-bottom:20px ;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,17 +55,51 @@
   margin-left: auto;
 }
 
+
+
+/* (右)卡片列表區 */
+.event{
+  /* height: 100%; */
+  display: flex;
+  flex-wrap: wrap;
+  align-content:space-between;
+  justify-content: space-between;
+  padding: 0px 30px 0px 30px;
+}
+
 .event-card{
   width: 23%;
   height: 48%;
   background-color: white;
   border-radius: 15px;
+  overflow: hidden;
 }
 
-.event{
+/* 活動卡片內細節 */
+.event-img{
+  width: 100%;
+  height: 45%;
+  background-image: url(../imgs/event-photo1.svg) no-repeat ;
+}
+
+
+.title{
+  width: 100%;
+  height: 18%;
+  background-color: #F0F8A6;
   display: flex;
-  flex-wrap: wrap;
-  align-content:space-between;
-  justify-content: space-between;
-  padding: 10px 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-card{
+  text-align: center;
+}
+
+.event-time{
+  background-color: #9587E1;
+}
+
+.event-cost{
+  color: #EBA3FB;
 }

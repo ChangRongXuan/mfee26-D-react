@@ -1,5 +1,6 @@
 import React from 'react';
-import ".//../styles/_background.css";
+import "./../styles/_background.css";
+
 
 import bg_left_down from "../imgs/bg-left-down.svg";
 import bg_right_top from "../imgs/bg-right-top.svg";
@@ -10,13 +11,13 @@ import bg_elf from "../imgs/elf.svg";
 
 const Background = () => {
     return (
-      <div className="view" style={{position: 'relative', zIndex: -100}}>
-        <img src={bg_left_down} alt=""  class="bg-left-wave" />
-        <img src={bg_right_top} alt=""  class="bg-right-wave" />
-        <img src={bg_left_star} alt=""  class="bg-left-star" />
-        <img src={bg_right_star} alt=""  class="bg-right-star" />
-        <img src={bg_elf} alt=""  class="bg-elf" />
-      </div>
+      <>
+        <img src={bg_left_down} alt=""  className="bg-left-wave" />
+        <img src={bg_right_top} alt=""  className="bg-right-wave" />
+        <img src={bg_left_star} alt=""  className="bg-left-star" />
+        <img src={bg_right_star} alt=""  className="bg-right-star" />
+        <img src={bg_elf} alt=""  className="bg-elf" />
+      </>
     );
 };
 

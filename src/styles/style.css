@@ -13,6 +13,7 @@
     --h-font: "M PLUS Rounded 1c";
     --text-font: "Noto Sans TC";
 }
+
 body{
     font: 400 16px var(--text-font), Arial, sans-serif;
 }
@@ -244,7 +245,7 @@ input[type=checkbox]:checked.switch::before{
 
 
 /* bootstrap抄作業 */
-.container,
+/* .container,
 .container-fluid,
 .container-xxl,
 .container-xl,
@@ -266,5 +267,5 @@ input[type=checkbox]:checked.switch::before{
 .row > * {
     flex-shrink: 0;
     max-width: 100%;
-    }
+    } */
 
