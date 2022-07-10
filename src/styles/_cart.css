@@ -1,0 +1,205 @@
+/* 如果有引BS這段CSS可省略 */
+.col-2{
+  width: 16.666% !important;
+}
+.col-10{
+  width: 83.333% !important;
+}
+
+.row{
+  display: flex;
+}
+
+/* ------------------------ */
+
+.cart-container{
+  width: 100%;
+  height: 85%;
+  margin: auto;
+  color: black;
+  list-style: none;
+  position: absolute;
+  /* /* top */
+  top:90px; 
+}
+
+.col, ul{
+  padding: 0;
+}
+
+
+.cart-container .row{
+  width: 85%;
+  height: 95%;
+  margin: auto;
+}
+
+.col-2, .col-10{
+  height: 100%;
+}
+
+.all-select-delete{
+  height: 12%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.all-select-delete>input{
+  margin-left: 35px;
+}
+
+.all-select-delete>img{
+  margin-left: 180px;
+}
+
+.cart-list-window{
+  padding-right: 50px;
+  height: 75%;
+  overflow: hidden;
+}
+
+.scroll-down{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.scroll-down>img{
+  width: 8%;
+  margin: auto;
+}
+
+
+
+.cart-list{
+  height: 100px;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 20px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-cost{
+  background-color: white;
+  border-radius: 15px;
+  width: 100%;
+  height: 55%;
+  padding: 1px;
+}
+
+.cart-cost>div:nth-child(1){
+  width: 100%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+.total-cost{
+  text-align: right;
+  border-top: 1px solid rgb(193, 193, 193);
+  margin: auto;
+  margin-top: 50px;
+  width: 75%;
+  height: 15%;
+  padding: 20px;
+}
+
+
+.cart-img{
+  width: 13%;
+  height: 90%;
+  border-radius: 15px;
+  background-color: rgb(188, 188, 188);
+}
+
+.cart-intro{
+  width: 55%;
+  height: 75%;
+  margin: auto;
+}
+
+.subtitle, p{
+  margin-bottom: 10px;
+}
+
+.cost{
+  width: 10%;
+}
+
+.cart-check{
+  width: 8%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donate-cost, .volunteer-cost{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 15px;
+  margin-top: 10px;
+}
+
+.cart-cost>.subtitle{
+  margin: auto;
+  text-align: center;
+}
+
+.cart-btn{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-btn>button{
+  width: 48%;
+  margin-top: 15px;
+}
+
+.delete-cross{
+  width: 5%;
+  height: 100%;
+}
+
+.delete-cross>img{
+  width: 30%;
+  height: 100%;
+}
+
+.time-location{
+  display: flex;
+}
+
+.cart-intro-title{
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+}
+
+.cart-intro-title>span{
+  width: 50px;
+  border-radius: 8px;
+  background-color:#EDEFF7;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.good-sum{
+  width: 100%;
+  height: 12%;
+}
