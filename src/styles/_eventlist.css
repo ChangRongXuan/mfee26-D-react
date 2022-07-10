@@ -20,7 +20,8 @@
   color: black;
   list-style: none;
   position: absolute;
-  bottom:0;
+  /* /* top */
+  top:90px; 
 }
 
 .col, ul{
@@ -33,12 +34,15 @@
 
 .event-container .row{
   width: 85%;
-  height: 90%;
+  height: 95%;
   margin: auto;
-  padding: 1px;
 }
 
 /* (左)下拉選單 */
+.event-selector{
+  margin-top: 38px;
+}
+
 .event-container li{
   list-style: none;
   background-color: white;
@@ -59,47 +63,118 @@
 
 /* (右)卡片列表區 */
 .event{
-  /* height: 100%; */
   display: flex;
   flex-wrap: wrap;
-  align-content:space-between;
+  align-items: center;
+  align-content:center;
   justify-content: space-between;
   padding: 0px 30px 0px 30px;
 }
 
 .event-card{
   width: 23%;
-  height: 48%;
+  height: 43%;
   background-color: white;
-  border-radius: 15px;
-  overflow: hidden;
+  border-radius: 0px 15px 15px 15px;
+  /* overflow: hidden; */
+  margin-top: 40px;
+  text-align: center;
+  position: relative;
 }
+
+
 
 /* 活動卡片內細節 */
-.event-img{
-  width: 100%;
-  height: 45%;
-  background-image: url(../imgs/event-photo1.svg) no-repeat ;
-}
-
-
-.title{
-  width: 100%;
-  height: 18%;
-  background-color: #F0F8A6;
+.good-cost{
+  border-radius: 10px 10px 0px 0px;
+  background-color: #E97BEE;
+  position: absolute;
+  left: 0px;
+  top:-25px;
+  color: white;
+  width: 50%;
+  height: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.event-card{
-  text-align: center;
+.event-type{
+  border-radius: 10px 10px 0px 0px;
+  background-color: #9B80DD;
+  position: absolute;
+  left: 125px;
+  top:-25px;
+  color: white;
+  width: 25%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-img{
+  width: 100%;
+  height: 43%;
+  overflow: hidden;
+  /* background-image: url(../imgs/event-photo1.svg) no-repeat ; */
+}
+
+/* 圖片這邊有點奇怪 待調整 */
+/* .event-img>img{
+  width: 120%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+} */
+
+.title{
+  width: 100%;
+  height: 15%;
+  background-color: #F0F8A6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.npo-name{
+  margin-bottom: 8px;
+  height: 15%;
 }
 
 .event-time{
+  width: 80%;
   background-color: #9587E1;
+  margin: 0px auto 3px auto;
+  color:white;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
 }
 
 .event-cost{
   color: #EBA3FB;
+}
+
+
+/* 頁籤(靈魂icon) */
+.page-soul{
+  margin-left: auto;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.page-soul>div{
+  width: 30%;
+  margin: auto;
+}
+
+.page-soul img{
+  margin: 5px; 
 }
