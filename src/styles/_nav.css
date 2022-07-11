@@ -44,3 +44,71 @@
   cursor: pointer; 
 }  */
 
+
+/* ----這邊處理nav光箱---- */
+    
+.lightbox_hidden{
+  background-color: black;
+  opacity: .7;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.lightbox_visible{
+  background-color: black;
+  opacity: .8;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: visible;
+  z-index: 200;
+  transition: linear .8s;
+}
+
+.lightbox_visible>.wrap{
+  width: 75%;
+  height: 70%;
+  margin: auto;
+  color: white;
+}
+
+.lightbox_visible>.wrap>p{
+  font-size: 32px;
+  font-weight: bolder;
+  min-width: 40%;
+  margin: 30px 0px;
+}
+
+.lightbox_visible>.wrap>p:hover{
+  cursor: pointer;
+  background-color: #FAFA88;
+  color: black;
+  width: 40%;
+}
+
+.close{
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.close:hover{
+  cursor: pointer;
+  background-color: yellow;
+}
+
+.fa-bars:hover{
+  cursor: pointer;
+}
+
