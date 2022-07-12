@@ -10,7 +10,7 @@ const Nav = () => {
 
     return (
         <>
-            {/* 這邊是光箱 */}
+            {/* 這邊是Navbar光箱 */}
             <div className={lightBox}>
                 <div className="wrap">
                     <div

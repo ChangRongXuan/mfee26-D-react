@@ -15,7 +15,7 @@ const EventList = () => {
                         <li>
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </li>
-                        <li className="btn-m">排序：</li>
+                        <li className="btn-m">排序：評價最高</li>
                         <li className="btn-m">
                             方案選擇<i className="fa-solid fa-angle-down"></i>
                         </li>
