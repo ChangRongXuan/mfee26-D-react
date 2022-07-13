@@ -1,10 +1,10 @@
 import React from 'react';
-import "./../styles/style.css";
-import "./../styles/_cart.css";
+import "../../styles/style.css";
+import "./_eventcart.css";
 
-import delete_cross from "../imgs/delete-cross.svg";
-import cart_step_1 from "../imgs/cart-step-1.svg";
-import scroll_down from "../imgs/scroll-down.svg";
+import delete_cross from "./imgs/delete-cross.svg";
+import cart_step_1 from "./imgs/cart-step-1.svg";
+import scroll_down from "./imgs/scroll-down.svg";
 
 
 
@@ -147,7 +147,7 @@ const Cart = () => {
         
         <div className="cart-cost">
             <div> 
-              <h5 class="subtitle">活動明細</h5> 
+              <h5 className="subtitle">活動明細</h5> 
             </div>
           
 
@@ -157,13 +157,13 @@ const Cart = () => {
             </div> 
 
             <div className="volunteer-cost">
-              <p class="caption">志工</p>
-              <h5 class="subtitle">NT$ 1000</h5> 
+              <p className="caption">志工</p>
+              <h5 className="subtitle">NT$ 1000</h5> 
             </div> 
 
             <div className="total-cost">
-              <p class="caption">總計 Total</p>
-              <h5 class="subtitle">NT$ 1500</h5> 
+              <p className="caption">總計 Total</p>
+              <h5 className="subtitle">NT$ 1500</h5> 
             </div>
 
         </div>

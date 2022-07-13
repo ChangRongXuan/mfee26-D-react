@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ".//../styles/_nav.css";
-// const { useState } = React; //從react物件中取出usestate方法(解構賦值)
 
 import nav_logo from "../imgs/nav_logo.svg";
 import nav_soul from "../imgs/nav_soul.svg";
