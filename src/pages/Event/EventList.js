@@ -13,7 +13,7 @@ const EventList = () => {
     
     // data直接傳出去會是promise物件 不能直接被用Q___Q
     fetch(
-        "/try-react"
+        "/event"
     ) 
         .then((response) => response.json())
         .then((data) => {

@@ -1,0 +1,10 @@
+.eventlist-container{
+  width: 85%;
+  height: 85%;
+  color: black;
+  list-style: none;
+  position: absolute;
+  top:90px; 
+  outline: 3px solid red;
+  margin: auto;
+}

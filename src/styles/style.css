@@ -244,29 +244,4 @@ input[type=checkbox]:checked.switch::before{
 }
 
 
-/* bootstrap抄作業 */
-/* .container,
-.container-fluid,
-.container-xxl,
-.container-xl,
-.container-lg,
-.container-md,
-.container-sm {
-    width: 100%;
-    padding-right: 0.75rem;
-    padding-left: 0.75rem;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 20px;
-    }
-.row > * {
-    flex-shrink: 0;
-    max-width: 100%;
-    } */
-
 

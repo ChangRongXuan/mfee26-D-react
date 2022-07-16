@@ -1,21 +1,58 @@
-import React from "react";
+// 使用套件
+import React, {useState} from "react";
 import ReactDOM from "react-dom/client"; //才可以做虛擬DOM(ReactVirtualDOM)
+// import {
+//     BrowserRouter as Router,
+//     Route,
+//     Routes,
+//     Link
+// } from "react-router-dom"; 
 
-import Nav from "./components/Nav";
-import BackgroundDark from "./components/BackgroundDark"; //暗色主題
-// import BackgroundLight from "./components/BackgroundLight";  //亮色主題
+
+//頁面用元件
 // import EventList from "./pages/Event/EventList";
-import EventCart from "./pages/EventCart/EventCart";
+// import EventDetail from "./pages/EventDetail/EventDetail";
+// import Cart from "./pages/Cart/Cart";
+import Cash from "./pages/Cash/Cash";
+
+
+// 組合用基本元件
+import Nav from "./components/Nav";
+import BackgroundLight from "./components/BackgroundLight";  //亮色主題
+// import BackgroundDark from "./components/BackgroundDark"; //暗色主題
+
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
+// import AppRouter from "./components/AppRouter";
+
 
 function App() {
+
+    const [cartNumber, setCartNumber] = useState('');
+
     return (
         <>
-            <Nav />
-            <BackgroundDark />
-            {/* <EventList />  */}
-            <EventCart />
+
+
+            <Nav 
+                cartNumber={cartNumber}
+                setCartNumber={setCartNumber}
+            />
+            <BackgroundLight />
+
+            {/* <AppRouter  
+                cartNumber={cartNumber} 
+                setCartNumber={setCartNumber}/> */}
+
+            <Cash/>
+
+            {/* <Cart 
+                cartNumber={cartNumber}
+                setCartNumber={setCartNumber}
+            />  */}
+
+            {/* <EventCart /> */}
+
         </>
     );
 }
