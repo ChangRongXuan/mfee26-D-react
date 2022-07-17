@@ -20,10 +20,10 @@ function OrderList(props) {
                 {/* 勾選 + 結帳流程圖 */}
                 <div className="all-select-delete">
                     <input type="checkbox" id="cbox" />
-                    <p class="caption">全選({productsInorder.length})</p>
+                    <p className="caption">全選({productsInorder.length})</p>
 
                     <input type="checkbox" id="cbox" />
-                    <p class="caption">全部刪除({productsInorder.length})</p>
+                    <p className="caption">全部刪除({productsInorder.length})</p>
 
                     <img src={cart_step_1} alt="" />
                 </div>

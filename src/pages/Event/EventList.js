@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/style.css";
 import "./_eventlist.css";
 import page_soul from "./imgs/soul.svg";
@@ -6,21 +6,25 @@ import page_soul from "./imgs/soul.svg";
 
 const EventList = () => {
 
-
-
-
     const [currentEvent, setCurrentEvent] = useState([]);    
+
+
+    // 防止無窮迴圈
+    useEffect(() => {
+        fetchEvent();
+    },[]);
     
-    // data直接傳出去會是promise物件 不能直接被用Q___Q
-    fetch(
-        "/event"
-    ) 
-        .then((response) => response.json())
+
+    // 取得npo_act資料
+    const fetchEvent = () => {
+        // data直接傳出去會是promise物件 不能直接被用Q___Q
+        fetch('http://localhost:3600/events') 
+        .then((r) => r.json())
         .then((data) => {
             console.log(data);
             setCurrentEvent(data);
         })
-
+    };
 
 
     return (
@@ -60,7 +64,7 @@ const EventList = () => {
                                 <div className="good-cost btn-s">陰德值：{v.value}</div>
                                 <div className="event-type btn-s"> {v.type_sid} </div>
                                 <div className="event-img"></div>
-                                <div class="title">{v.act_title}</div>
+                                <div className="title">{v.act_title}</div>
                                 <h4 className="btn-m npo-name">
                                     {v.npo_name}
                                 </h4>

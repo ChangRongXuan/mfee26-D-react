@@ -10,10 +10,10 @@ import ReactDOM from "react-dom/client"; //才可以做虛擬DOM(ReactVirtualDOM
 
 
 //頁面用元件
-// import EventList from "./pages/Event/EventList";
+import EventList from "./pages/Event/EventList";
 // import EventDetail from "./pages/EventDetail/EventDetail";
 // import Cart from "./pages/Cart/Cart";
-import Cash from "./pages/Cash/Cash";
+// import Cash from "./pages/Cash/Cash";
 
 
 // 組合用基本元件
@@ -43,8 +43,9 @@ function App() {
             {/* <AppRouter  
                 cartNumber={cartNumber} 
                 setCartNumber={setCartNumber}/> */}
-
-            <Cash/>
+            
+            <EventList />
+            {/* <Cash/> */}
 
             {/* <Cart 
                 cartNumber={cartNumber}

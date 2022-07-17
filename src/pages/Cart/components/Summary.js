@@ -14,8 +14,8 @@ function Summary(props) {
                     </div>
 
                     <div className="donate-cost">
-                        <p class="caption">贊助({donateNumber})</p>
-                        <h5 class="subtitle">NT$ {donatePrice}</h5>
+                        <p className="caption">贊助({donateNumber})</p>
+                        <h5 className="subtitle">NT$ {donatePrice}</h5>
                     </div>
 
                     <div className="volunteer-cost">

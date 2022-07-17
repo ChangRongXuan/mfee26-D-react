@@ -21,10 +21,10 @@ const Cart = () => {
       {/* 勾選 + 結帳流程圖 */}
         <div className="all-select-delete">
           <input type="checkbox"  id="cbox"/>
-          <p class="caption">全選(10)</p>
+          <p className="caption">全選(10)</p>
 
           <input type="checkbox"  id="cbox"/>
-          <p class="caption">全部刪除(10)</p>
+          <p className="caption">全部刪除(10)</p>
 
           <img src={cart_step_1} alt="" />
         </div>
@@ -152,8 +152,8 @@ const Cart = () => {
           
 
             <div className="donate-cost">
-              <p class="caption">贊助</p>
-              <h5 class="subtitle">NT$ 500</h5> 
+              <p className="caption">贊助</p>
+              <h5 className="subtitle">NT$ 500</h5> 
             </div> 
 
             <div className="volunteer-cost">
