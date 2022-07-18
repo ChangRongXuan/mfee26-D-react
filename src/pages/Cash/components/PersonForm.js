@@ -110,6 +110,7 @@ const handleChange = (e) => {
   
   }
 
+  // bootstrap indetermine 
 
 
   return (

@@ -14,6 +14,7 @@ import EventList from "./pages/Event/EventList";
 // import EventDetail from "./pages/EventDetail/EventDetail";
 // import Cart from "./pages/Cart/Cart";
 // import Cash from "./pages/Cash/Cash";
+// import EventList from "./pages/Event/EventList";
 
 
 // 組合用基本元件
