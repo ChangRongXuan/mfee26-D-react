@@ -20,7 +20,7 @@ function ProductList(props) {
                     <p className="event-time btn-m">活動時間：{v.start}</p>
                     <div className="event-cost btn-m">報名費：{v.price}</div>
                 </div>    
-            )})};      
+            )})}     
 
     </>
   )

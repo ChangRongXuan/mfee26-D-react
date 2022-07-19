@@ -1,7 +1,7 @@
-import React from 'react'
-import PriceRangeRadio from './PriceRangeRadio'
+import React from 'react';
+import PriceRangeRadio from './PriceRangeRadio';
 import TagCheckbox from './TagCheckbox';
-// import TagCheckboxArea from './TagCheckboxArea';
+import TagCheckboxArea from './TagCheckboxArea';
 
 function FilterBar(props) {
   const {
@@ -17,9 +17,9 @@ function FilterBar(props) {
     setTags,
 
     // area select
-    // areaTypes,
-    // areas,
-    // setAreas
+    areaTypes,
+    areas,
+    setAreas
 
   } = props
 
@@ -34,24 +34,25 @@ function FilterBar(props) {
     }
   }
 
-  // const handleCheckedArea = (e) => {
-  //   const value = e.target.value
-  //   if (!areas.includes(value)) return setAreas([...areas, value])
+  const handleCheckedArea = (e) => {
 
-  //   if (areas.includes(value)) {
-  //     const newAreas = areas.filter((v) => v !== value)
-  //     setTags(newAreas)
-  //   }
-  // }
+    const value = e.target.value
+    if (!areas.includes(value)) return setAreas([...areas, value])
+
+    if (areas.includes(value)) {
+      const newAreas = areas.filter((v) => v !== value)
+      setAreas(newAreas)
+    }
+  }
 
 
   
   return (
     <>
-      <h2 className="grid-title">
+      {/* <h2 className="grid-title">
         <i className="fa fa-filter"></i> 過濾
-      </h2>
-      <hr />
+      </h2> */}
+      {/* <hr /> */}
 
       <h4>價格</h4>
 
@@ -70,7 +71,7 @@ function FilterBar(props) {
         標籤
         <button 
           className="btn btn-link btn-sm" 
-          onClick={() => {setTags([])}}>
+          onClick={() => {setTags([]); setAreas([])}}>
           
           重設
         </button>
@@ -87,15 +88,15 @@ function FilterBar(props) {
         />
       ))}
 
-      {/* <p>地區種類</p>
+      <p>地區種類</p>
       {areaTypes.map((value, i) => (
         <TagCheckboxArea
           value={value}
           key={i}
-          tags={areas}
-          handleChecked={handleCheckedArea}
+          areas={areas}
+          handleCheckedArea={handleCheckedArea}
         />
-      ))} */}
+      ))}
 
       <div className="padding"></div>
     </>

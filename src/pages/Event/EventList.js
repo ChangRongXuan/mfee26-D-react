@@ -1,11 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
+import './_eventlist.css'
 import "../../styles/style.css";
-import "./_eventlist.css";
 import page_soul from "./imgs/soul.svg";
 import axios from "axios";
 
+// 改為資料夾方式中的index.js
+import FilterBar from './components/FilterBar'
+import ProductList from './components/ProductList'
+import SearchBar from './components/SearchBar'
+import SortBar from './components/SortBar';
 
-function EventList () {
+
+function TestEvent() {
+
+
+
+  // 活動用的資料
+  // 1. 從伺服器來的原始資料
+  const [eventRaw, setEventRaw] = useState([])
+
+  // 2. 用於網頁上經過各種處理(排序、搜尋、過濾)後的資料
+  const [displayEvent, setDisplayEvent] = useState([])
+
+
+
+
+  // 下面四個狀態是對應到四種不同的表單元素
+
+  // 活動種類 -> select多選 
+  const [tags, setTags] = useState([])
+  const tagTypes = ['環境', '動保', '長照', '兒少', '身心障礙', '其他']
+
+  // 地區種類 -> select多選 
+  const [areas, setAreas] = useState([])
+  const areaTypes = ['北部', '中部', '南部', '東部', '離島']
+
+  //搜尋功能 -> 文字篩選
+  const [searchWord, setSearchWord] = useState('')
+
+  // radio -> 金額
+  const [priceRange, setPriceRange] = useState('所有')
+  const priceRangeTypes = ['0-100', '100-500', '所有']
+
+  // 排序條件 -> 下拉式選單
+  const [sortBy, setSortBy] = useState('')
+
+  // 載入指示的spinner動畫用的
+  const [isLoading, setIsLoading] = useState(false)
+
+  //x秒後自動關掉spinner(設定isLoading為false)
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1000)
+    }
+  }, [isLoading])
+
+  
+
+// 跟MySQL拿活動資料(目前暫時限8筆)
+  const  fetchEvent = async () => {
+    const response =await axios.get('http://localhost:3600/events')
+    setDisplayEvent(response.data); //讓component進入DidUpdate階段
+    setEventRaw(response.data); //讓component進入DidUpdate階段
+}
+
+
+  // 初始化資料-didMount
+  useEffect(() => {
+    // 先開起載入指示器
+    setIsLoading(true)
+
+    // 模擬和伺服器要資料
+    // 最後設定到狀態中
+    fetchEvent();
+
+  }, [])
 
 
 // act_title: "浪貓中途送養"
@@ -23,234 +94,236 @@ function EventList () {
 // type_sid: 2
 // value: 50
 
-    // 選項跑迴圈
-    const act_type_Options = ['環保','動保','長照', '兒少','身心障礙','其他'];
-    const area_name_Options = ['北部','中部','南部', '東部','離島'];
 
 
-    const [eventRaw, setEventRaw] = useState([]); //原始資料，不去做更動  初始值一定要設[]，{}，不然undefined不能用map  
-    const [eventDisplay, setEventDisplay] = useState([]); //依照篩選條件隨時做變動
-    
-    // 搜尋(search)用
-    const [searchWord, setSearchWord] = useState('');
-
-    // 載入資料指示狀態
-    const [isLoading, setIsLoading] = useState(false)
+  // 四個表單元素的處理方法
 
 
+  //搜尋功能 -> 文字篩選
+  const handleSearch = (eventRaw, searchWord) => {
+    let newEvent = [...eventRaw]
 
+    if (searchWord.length) {
+      newEvent = eventRaw.filter((event) => {
+        // includes -> String API
+        return event.act_title.includes(searchWord); //活動標題含有searchWord
+      })
+    } 
 
-    const  fetchEvent = async () => {
-        const response =await axios.get('http://localhost:3600/events')
-        setEventDisplay(response.data); //讓component進入DidUpdate階段
-        setEventRaw(response.data); //讓component進入DidUpdate階段
+    return newEvent
+  }
+
+  const handleSort = (eventRaw, sortBy) => {
+    let newEvent = [...eventRaw]
+
+    // 熱門活動(暫時以活動人數來排序) 
+    if (sortBy === '1') {
+      newEvent = [...newEvent].sort((a, b) => a.limit_num - b.limit_num)
+    }
+    // 評價最高 (暫不處理)
+    if (sortBy === '2') {
+      newEvent = [...newEvent].sort((a, b) => b.price - a.price)
+    }
+    // 價格(由低至高) OK 
+    if (sortBy === '3') {
+      newEvent = [...newEvent].sort((a, b) => a.price - b.price)
+    }
+    // 時間(由近到遠) (暫不處理)
+    if (sortBy === '4') {
+      newEvent = [...newEvent].sort((a, b) => b.price - a.price)
+    }
+    // 陰德值(由低到高) OK
+    if (sortBy === '5') {
+      newEvent = [...newEvent].sort((a, b) => a.value - b.value)
     }
 
-    // // 取得npo_act資料
-    // const fetchEvent = () => {
-    //     // data直接傳出去會是promise物件 不能直接被用Q___Q
-    //     fetch('http://localhost:3600/events') 
-    //     .then((r) => r.json())
-    //     .then((data) => {
-    //         console.log(data);
-    //         setCurrentEventRaw(data);
-    //         setCurrentEventDisplay(data);
-    //     })
-    // };
+
+    // 預設(請選擇)：用id小至大
+    if (sortBy === '' && newEvent.length > 0) {
+      newEvent = [...newEvent].sort((a, b) => a.sid - b.sid)
+    }
 
 
-// -------------------每次render完後固定檢查所有useEffect------------------
+    return newEvent
+  }
 
-    // DidMount 
-    useEffect(() => {
-        setIsLoading(true);
-        fetchEvent(); //if沒有呼叫這個function State(eventRaw)=[] State(eventDisplay)=[]
-    },[]); 
-    // 第一次被呼叫:因為dependencies的值才剛被帶入，所以會呼叫 useEffect 內的函式
-    // 第二次依舊是[]，沒有更新，fetchEvent()也因此不會被呼叫
-        
+  const handleTags = (eventRaw, tags) => {
+    let newEvent = [...eventRaw]
 
-    // DidUpdate 
-    useEffect(() => {
-        if (isLoading) { //第一次render因為是false，所以不會被執行
-            setTimeout(() => {
-            setIsLoading(false)
-            }, 2000)
+    // tags = 代表使用者目前勾選的標籤陣列
+    //console.log(tags)
+
+
+    // const [tags, setTags] = useState([])
+    // const tagTypes = ['環境', '動保', '長照', '兒少', '身心障礙', '其他']
+
+
+    // 處理勾選標記
+    if (tags.length > 0) {
+      newEvent = [...newEvent].filter((event) => {
+        let isFound = false
+
+        // 原本資料裡的tags字串轉為陣列
+        // const eventTags = event.name.split('')
+
+        // 用目前使用者勾選的標籤用迴圈找，有找到就回傳true
+        for (let i = 0; i < tags.length; i++) {
+          // includes -> Array api
+          if (event.name.includes(tags[i])) {
+            isFound = true // 找到設為true
+            break // 找到一個就可以，中斷迴圈
+          }
         }
-    }, [isLoading]) //這邊第一次render後也會被檢查，代入的值是isLoading預設值false
+
+        return isFound
+      })
+    }
+
+    return newEvent
+  }
 
 
-        const spinner = (
-            <>
-                <div className="spinner-grow text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-                </div>
-                <div className="spinner-grow text-secondary" role="status">
-                <span className="visually-hidden">Loading...</span>
-                </div>
-                <div className="spinner-grow text-success" role="status">
-                <span className="visually-hidden">Loading...</span>
-                </div>
-            </>
-            )
+  // 處理area
+  const handleAreas = (eventRaw, areas) => {
+    let newEvent = [...eventRaw]
 
-        
-        const displayTable = (
-                <>
-                    {eventDisplay.map((v, i) => {
-                    return (
-                        <div className="event-card" key={v.sid}>
-                            <div className="good-cost btn-s">陰德值：{v.value}</div>
-                            <div className="event-type btn-s"> {v.name} </div>
-                            <div className="event-img"></div>
-                            <div className="title">{v.act_title}</div>
-                            <h4 className="btn-m npo-name">
-                                {v.npo_name}
-                            </h4>
-                            <p className="event-time btn-m">活動時間：{v.start}</p>
-                            <div className="event-cost btn-m">報名費：{v.price}</div>
-                        </div>    
-                    )})};        
-                
-                </>
-        )
+    // 處理勾選標記
+    if (areas.length > 0) {
+      newEvent = [...newEvent].filter((event) => {
+        let isFound = false
+
+        // 原本資料裡的tags字串轉為陣列
+        // const eventAreas = event.areas.split(',')
+
+        // 用目前使用者勾選的標籤用迴圈找，有找到就回傳true
+        for (let i = 0; i < areas.length; i++) {
+          // includes -> Array api
+          if (event.area_name.includes(areas[i])) {
+            isFound = true // 找到設為true
+            break // 找到一個就可以，中斷迴圈
+          }
+        }
+
+        return isFound
+      })
+    }
+
+    return newEvent;
+  }
+
+
+
+  const handlePriceRange = (eventRaw, priceRange) => {
+    let newEvent = [...eventRaw]
+
+    // 處理價格區間選項
+    switch (priceRange) {
+      case '0-100':
+        newEvent = eventRaw.filter((p) => {
+          return p.price<=100
+        })
+        break
+      case '100-500':
+        newEvent = eventRaw.filter((p) => {
+          return p.price > 100 && p.price <= 500
+        })
+        break
+      // 指所有的產品都出現
+      default:
+        break
+    }
+
+    return newEvent
+  }
+
+  // 當四個過濾表單元素有更動時
+  // componentDidUpdate + didMount
+  // ps. 一開始也會載入
+  useEffect(() => {
     
+    // 搜尋字串太少不需要搜尋(如果想要限最低搜尋字數)
+    // if (searchWord.length < 3 && searchWord.length !== 0)
+    // return 
+    
+    // 先開起載入指示器
+    setIsLoading(true)
 
-    return (
+    let newEvent = []
+
+    // 處理搜尋
+    newEvent = handleSearch(eventRaw, searchWord)
+
+    // 處理排序
+    newEvent = handleSort(newEvent, sortBy)
+
+    // 處理勾選標記
+    newEvent = handleTags(newEvent, tags)
+    newEvent = handleAreas(newEvent, areas)
+
+    // 處理價格區間選項
+    newEvent = handlePriceRange(newEvent, priceRange)
+
+    setDisplayEvent(newEvent)
+
+  }, [searchWord, eventRaw, sortBy, tags, areas, priceRange])
+
+  // bootstrap 的spinner
+  const spinner = (
+    <>
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border text-success" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    </>
+  )
+
+  // 真正要呈現的資料
+  return (
+    <>
+
         <div className="event-container">
             <div className="row">
+
+                {/* 篩選欄位 */}
                 <div className="col col-2 event-selector">
-                    <ul>
-                        
-                        {/* 搜尋 */}
-                        <li >
-                            {/* <i className="fa-solid fa-magnifying-glass"></i> */}
-                            <input 
-                                type="text" 
-                                placeholder="輸入活動名稱" 
-                                value={searchWord} 
-                                onChange={ (e)=>{
 
-                                    // 在onChange內的set都會最晚執行(set狀態是非同步的)，都要先取值
-                                    const newSearchWord = e.target.value
-                                    setSearchWord(newSearchWord); 
+                    <SearchBar
+                      searchWord={searchWord}
+                      setSearchWord={setSearchWord}
+                    />
 
-                                    setIsLoading(true);
+                    <SortBar sortBy={sortBy} setSortBy={setSortBy} />
 
-                                    if(newSearchWord){ //searchWord是空字串
-                                        const newEventDisplay = eventRaw.filter((v,i)=>v.act_title.includes(newSearchWord));
-                                        setEventDisplay(newEventDisplay);  //這時候還讀不到當前的 EventRaw
-                                    }else{ 
-                                        setEventDisplay(eventRaw);
-                                    }
+                    <FilterBar
 
-                                }}
-                            />
+                      // price radio
+                      priceRangeTypes={priceRangeTypes}
+                      priceRange={priceRange}
+                      setPriceRange={setPriceRange}
 
-                        
+                      // type select 
+                      tagTypes={tagTypes}
+                      tags={tags}
+                      setTags={setTags}
 
-                        </li>
+                      // area select
+                      areaTypes={areaTypes}
+                      areas={areas}
+                      setAreas={setAreas}
+                    />
 
-                        {/* <button className="btn-m btn-sec" style={{margin:20+"px"}} type="submit">送出資料</button> */}
-
-
-                        <li className="btn-m">排序：評價最高</li>
-                        
-                            {/*name要一樣才能單選  */}
-                            <input type="radio" name="123" id="rbox"/>
-                            <label htmlFor="rbox" className="checkbox">
-                            熱門活動</label>
-
-                            <input type="radio" name="123" id="rbox"/>
-                            <label htmlFor="rbox" className="checkbox">
-                            評價最高</label>                           
-                            
-                            <input type="radio" name="123" id="rbox"/>
-                            <label htmlFor="rbox" className="checkbox" >
-                            價格(由低至高)</label>
-                            
-                            <input type="radio" name="123" id="rbox"/>
-                            <label htmlFor="rbox" className="checkbox" 
-                            >
-                            時間(由近到遠)</label>
-                            
-                            <input type="radio" name="123" id="rbox" />
-                            <label htmlFor="rbox" className="checkbox">
-                            陰德值(由低到高)</label>
-
-                    
-                        
-                        <li className="btn-m">
-                            方案選擇<i className="fa-solid fa-angle-down"></i>
-                        </li>
-
-                            <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            參與志工</label>
-                            <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            公益贊助</label>
-                        
-                        
-                        
-                        
-                        <li className="btn-m">
-                            活動分類<i className="fa-solid fa-angle-down"></i>
-                        </li>
-
-
-                        {act_type_Options.map((v,i)=>{
-                            return(
-
-                            <div key={i} >
-                                <input 
-                                    type="checkbox" 
-                                    name="act_type" 
-                                    id="cbox" 
-                                    // checked=""
-                                    value={v}    
-                                    />
-                                <label htmlFor="cbox" className="checkbox">
-                                {v}</label>
-                            </div>)
-                        })}
-
-
-
-
-                        <li className="btn-m">
-                            價格範圍<i className="fa-solid fa-angle-down"></i>
-                        </li>
-
-
-                        <li className="btn-m">
-                            地區<i className="fa-solid fa-angle-down"></i>
-                        </li>
-            
-                            {area_name_Options.map((v,i)=>{
-                            return(
-
-                            <div key={i} >
-                                <input 
-                                    type="checkbox" 
-                                    name="area_name" 
-                                    id="cbox" 
-                                    // checked=""
-                                    value={v}    
-                                    />
-                                <label htmlFor="cbox" className="checkbox">
-                                {v}</label>
-                            </div>)
-                            })}
-
-                    </ul>
                 </div>
 
 
 
                 <div className="col col-10 event">
 
-                {isLoading ? spinner  : displayTable}
+                  {isLoading ? (
+                        spinner
+                      ) : (
+                        <ProductList events={displayEvent} />
+                  )}
 
                 </div>
                 
@@ -265,9 +338,9 @@ function EventList () {
                 </div>
             </div>
         </div>
-    );
-};
 
+    </>
+  )
+}
 
-
-export default EventList;
+export default TestEvent;

@@ -12,7 +12,7 @@ import BackgroundLight from "./components/BackgroundLight";  //亮色主題
 // import BackgroundDark from "./components/BackgroundDark"; //暗色主題
 
 
-import TestEvent from "./pages/Event/TestEvent";
+import TestEvent from "./pages/Event/EventList";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
