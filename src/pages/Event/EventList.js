@@ -3,10 +3,9 @@ import "../../styles/style.css";
 import "./_eventlist.css";
 import page_soul from "./imgs/soul.svg";
 import axios from "axios";
-// import { render } from "@testing-library/react";
 
 
-const EventList = () => {
+function EventList () {
 
 
 // act_title: "浪貓中途送養"
@@ -24,11 +23,12 @@ const EventList = () => {
 // type_sid: 2
 // value: 50
 
+    // 選項跑迴圈
     const act_type_Options = ['環保','動保','長照', '兒少','身心障礙','其他'];
     const area_name_Options = ['北部','中部','南部', '東部','離島'];
 
 
-    const [eventRaw, setEventRaw] = useState([]); //原始資料，不去做更動    
+    const [eventRaw, setEventRaw] = useState([]); //原始資料，不去做更動  初始值一定要設[]，{}，不然undefined不能用map  
     const [eventDisplay, setEventDisplay] = useState([]); //依照篩選條件隨時做變動
     
     // 搜尋(search)用
@@ -39,10 +39,11 @@ const EventList = () => {
 
 
 
+
     const  fetchEvent = async () => {
         const response =await axios.get('http://localhost:3600/events')
-        setEventDisplay(response.data);
-        setEventRaw(response.data);
+        setEventDisplay(response.data); //讓component進入DidUpdate階段
+        setEventRaw(response.data); //讓component進入DidUpdate階段
     }
 
     // // 取得npo_act資料
@@ -58,21 +59,25 @@ const EventList = () => {
     // };
 
 
-    // 防止無窮迴圈
+// -------------------每次render完後固定檢查所有useEffect------------------
+
+    // DidMount 
     useEffect(() => {
         setIsLoading(true);
-        fetchEvent();
+        fetchEvent(); //if沒有呼叫這個function State(eventRaw)=[] State(eventDisplay)=[]
+    },[]); 
+    // 第一次被呼叫:因為dependencies的值才剛被帶入，所以會呼叫 useEffect 內的函式
+    // 第二次依舊是[]，沒有更新，fetchEvent()也因此不會被呼叫
+        
 
-    },[]); //只會取值一次，不會即時更新MySQL
-    
-
+    // DidUpdate 
     useEffect(() => {
-        if (isLoading) {
+        if (isLoading) { //第一次render因為是false，所以不會被執行
             setTimeout(() => {
             setIsLoading(false)
             }, 2000)
         }
-        }, [isLoading])
+    }, [isLoading]) //這邊第一次render後也會被檢查，代入的值是isLoading預設值false
 
 
         const spinner = (
@@ -109,25 +114,8 @@ const EventList = () => {
                 
                 </>
         )
-
-
-    // debug測試用
-    async function renderNew(e) {
-        await setSearchWord(e.target.value);
-        if(searchWord===''){ //searchWord是空字串
-            setEventDisplay(eventRaw);
-            console.log('search', searchWord);
-            console.log('Raw', eventRaw);
-        }else{ 
-            console.log('search', searchWord);
-            const newEventDisplay = eventRaw.filter((v,i)=>v.act_title.includes(searchWord));
-            setEventDisplay(newEventDisplay);  //這時候還讀不到當前的 EventRaw
-            console.log('new', newEventDisplay);
-        }
-
-    }
-
     
+
     return (
         <div className="event-container">
             <div className="row">
@@ -141,9 +129,21 @@ const EventList = () => {
                                 type="text" 
                                 placeholder="輸入活動名稱" 
                                 value={searchWord} 
-                                
                                 onChange={ (e)=>{
-                                    setSearchWord(e.target.value);
+
+                                    // 在onChange內的set都會最晚執行(set狀態是非同步的)，都要先取值
+                                    const newSearchWord = e.target.value
+                                    setSearchWord(newSearchWord); 
+
+                                    setIsLoading(true);
+
+                                    if(newSearchWord){ //searchWord是空字串
+                                        const newEventDisplay = eventRaw.filter((v,i)=>v.act_title.includes(newSearchWord));
+                                        setEventDisplay(newEventDisplay);  //這時候還讀不到當前的 EventRaw
+                                    }else{ 
+                                        setEventDisplay(eventRaw);
+                                    }
+
                                 }}
                             />
 
