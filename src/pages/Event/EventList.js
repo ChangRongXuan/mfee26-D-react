@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../styles/style.css";
 import "./_eventlist.css";
 import page_soul from "./imgs/soul.svg";
+import axios from "axios";
+// import { render } from "@testing-library/react";
 
 
 const EventList = () => {
@@ -23,41 +25,109 @@ const EventList = () => {
 // value: 50
 
     const act_type_Options = ['環保','動保','長照', '兒少','身心障礙','其他'];
+    const area_name_Options = ['北部','中部','南部', '東部','離島'];
 
 
-    const [currentEventRaw, setCurrentEventRaw] = useState([]); //原始資料，不去做更動    
-    const [currentEventDisplay, setCurrentEventDisplay] = useState([]); //依照篩選條件隨時做變動
+    const [eventRaw, setEventRaw] = useState([]); //原始資料，不去做更動    
+    const [eventDisplay, setEventDisplay] = useState([]); //依照篩選條件隨時做變動
     
-    // 篩選資料用
-    const [pick, setPick] = useState('');
+    // 搜尋(search)用
+    const [searchWord, setSearchWord] = useState('');
 
     // 載入資料指示狀態
-    // const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+
+
+    const  fetchEvent = async () => {
+        const response =await axios.get('http://localhost:3600/events')
+        setEventDisplay(response.data);
+        setEventRaw(response.data);
+    }
+
+    // // 取得npo_act資料
+    // const fetchEvent = () => {
+    //     // data直接傳出去會是promise物件 不能直接被用Q___Q
+    //     fetch('http://localhost:3600/events') 
+    //     .then((r) => r.json())
+    //     .then((data) => {
+    //         console.log(data);
+    //         setCurrentEventRaw(data);
+    //         setCurrentEventDisplay(data);
+    //     })
+    // };
 
 
     // 防止無窮迴圈
     useEffect(() => {
-
+        setIsLoading(true);
         fetchEvent();
 
     },[]); //只會取值一次，不會即時更新MySQL
     
 
-
-    // 取得npo_act資料
-    const fetchEvent = () => {
-        // data直接傳出去會是promise物件 不能直接被用Q___Q
-        fetch('http://localhost:3600/events') 
-        .then((r) => r.json())
-        .then((data) => {
-            console.log(data);
-            setCurrentEventRaw(data);
-            setCurrentEventDisplay(data);
-        })
-    };
+    useEffect(() => {
+        if (isLoading) {
+            setTimeout(() => {
+            setIsLoading(false)
+            }, 2000)
+        }
+        }, [isLoading])
 
 
+        const spinner = (
+            <>
+                <div className="spinner-grow text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+                </div>
+                <div className="spinner-grow text-secondary" role="status">
+                <span className="visually-hidden">Loading...</span>
+                </div>
+                <div className="spinner-grow text-success" role="status">
+                <span className="visually-hidden">Loading...</span>
+                </div>
+            </>
+            )
 
+        
+        const displayTable = (
+                <>
+                    {eventDisplay.map((v, i) => {
+                    return (
+                        <div className="event-card" key={v.sid}>
+                            <div className="good-cost btn-s">陰德值：{v.value}</div>
+                            <div className="event-type btn-s"> {v.name} </div>
+                            <div className="event-img"></div>
+                            <div className="title">{v.act_title}</div>
+                            <h4 className="btn-m npo-name">
+                                {v.npo_name}
+                            </h4>
+                            <p className="event-time btn-m">活動時間：{v.start}</p>
+                            <div className="event-cost btn-m">報名費：{v.price}</div>
+                        </div>    
+                    )})};        
+                
+                </>
+        )
+
+
+    // debug測試用
+    async function renderNew(e) {
+        await setSearchWord(e.target.value);
+        if(searchWord===''){ //searchWord是空字串
+            setEventDisplay(eventRaw);
+            console.log('search', searchWord);
+            console.log('Raw', eventRaw);
+        }else{ 
+            console.log('search', searchWord);
+            const newEventDisplay = eventRaw.filter((v,i)=>v.act_title.includes(searchWord));
+            setEventDisplay(newEventDisplay);  //這時候還讀不到當前的 EventRaw
+            console.log('new', newEventDisplay);
+        }
+
+    }
+
+    
     return (
         <div className="event-container">
             <div className="row">
@@ -66,17 +136,19 @@ const EventList = () => {
                         
                         {/* 搜尋 */}
                         <li >
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" placeholder="輸入活動名稱" value={pick} onChange={(e)=>{
-                                setPick(e.target.value);
-                            
-                                if(pick){
-                                    const currentEventDisplay = currentEventRaw.filter((v,i)=>v.act_title.includes(pick))
-                                    setCurrentEventDisplay(currentEventDisplay);   
-                                }else{
-                                    setCurrentEventDisplay(currentEventRaw);
-                                }
-                            }}/>
+                            {/* <i className="fa-solid fa-magnifying-glass"></i> */}
+                            <input 
+                                type="text" 
+                                placeholder="輸入活動名稱" 
+                                value={searchWord} 
+                                
+                                onChange={ (e)=>{
+                                    setSearchWord(e.target.value);
+                                }}
+                            />
+
+                        
+
                         </li>
 
                         {/* <button className="btn-m btn-sec" style={{margin:20+"px"}} type="submit">送出資料</button> */}
@@ -88,6 +160,7 @@ const EventList = () => {
                             <input type="radio" name="123" id="rbox"/>
                             <label htmlFor="rbox" className="checkbox">
                             熱門活動</label>
+
                             <input type="radio" name="123" id="rbox"/>
                             <label htmlFor="rbox" className="checkbox">
                             評價最高</label>                           
@@ -95,10 +168,12 @@ const EventList = () => {
                             <input type="radio" name="123" id="rbox"/>
                             <label htmlFor="rbox" className="checkbox" >
                             價格(由低至高)</label>
+                            
                             <input type="radio" name="123" id="rbox"/>
                             <label htmlFor="rbox" className="checkbox" 
                             >
                             時間(由近到遠)</label>
+                            
                             <input type="radio" name="123" id="rbox" />
                             <label htmlFor="rbox" className="checkbox">
                             陰德值(由低到高)</label>
@@ -126,19 +201,19 @@ const EventList = () => {
 
                         {act_type_Options.map((v,i)=>{
                             return(
-                            <div key={i}>
-                            <input 
-                                type="checkbox" 
-                                name="act_type" 
-                                id="cbox" 
-                                checked={myInfor.gender===v}
-                                value={v}    
-                                />
-                            <label htmlFor="cbox" className="checkbox">
-                            {v}</label>
-                            )
 
-                        })};
+                            <div key={i} >
+                                <input 
+                                    type="checkbox" 
+                                    name="act_type" 
+                                    id="cbox" 
+                                    // checked=""
+                                    value={v}    
+                                    />
+                                <label htmlFor="cbox" className="checkbox">
+                                {v}</label>
+                            </div>)
+                        })}
 
 
 
@@ -151,23 +226,22 @@ const EventList = () => {
                         <li className="btn-m">
                             地區<i className="fa-solid fa-angle-down"></i>
                         </li>
+            
+                            {area_name_Options.map((v,i)=>{
+                            return(
 
-                        <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            北部</label>
-                            <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            中部</label>
-                            <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            南部</label>
-                            <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            東部</label>
-                            <input type="checkbox" name="" id="cbox" />
-                            <label htmlFor="cbox" className="checkbox">
-                            離島</label>
-                            
+                            <div key={i} >
+                                <input 
+                                    type="checkbox" 
+                                    name="area_name" 
+                                    id="cbox" 
+                                    // checked=""
+                                    value={v}    
+                                    />
+                                <label htmlFor="cbox" className="checkbox">
+                                {v}</label>
+                            </div>)
+                            })}
 
                     </ul>
                 </div>
@@ -176,24 +250,7 @@ const EventList = () => {
 
                 <div className="col col-10 event">
 
-                {/* {isLoading ?  <LoadingCat/> : displayTable} */}
-
-                {/* 處理活動卡片迴圈 */}
-                    {currentEventDisplay.map((v, i) => {
-                        return (
-                            <div className="event-card" key={v.sid}>
-                                <div className="good-cost btn-s">陰德值：{v.value}</div>
-                                <div className="event-type btn-s"> {v.name} </div>
-                                <div className="event-img"></div>
-                                <div className="title">{v.act_title}</div>
-                                <h4 className="btn-m npo-name">
-                                    {v.npo_name}
-                                </h4>
-                                <p className="event-time btn-m">活動時間：{v.start}</p>
-                                <div className="event-cost btn-m">報名費：{v.price}</div>
-                            </div>
-                            )
-                    })};
+                {isLoading ? spinner  : displayTable}
 
                 </div>
                 
