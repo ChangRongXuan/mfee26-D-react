@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import axios from "axios";
+import {Event_List_GET} from "../../config/ajax-path";
+
+
+// CSS、圖片
+import '../../styles/bootstrap-grid.css';
 import './_eventlist.css'
 import "../../styles/style.css";
 import page_soul from "./imgs/soul.svg";
-import axios from "axios";
+
 
 // 改為資料夾方式中的index.js
 import FilterBar from './components/FilterBar'
@@ -61,10 +67,13 @@ function TestEvent() {
 
 // 跟MySQL拿活動資料(目前暫時限8筆)
   const  fetchEvent = async () => {
-    const response =await axios.get('http://localhost:3600/events')
+    // const response =await axios.get('http://localhost:3600/events')
+    const response =await axios.get(Event_List_GET)
     setDisplayEvent(response.data); //讓component進入DidUpdate階段
     setEventRaw(response.data); //讓component進入DidUpdate階段
 }
+
+
 
 
   // 初始化資料-didMount
@@ -267,6 +276,8 @@ function TestEvent() {
 
   }, [searchWord, eventRaw, sortBy, tags, areas, priceRange])
 
+
+
   // bootstrap 的spinner
   const spinner = (
     <>
@@ -277,6 +288,7 @@ function TestEvent() {
       </div>
     </>
   )
+
 
   // 真正要呈現的資料
   return (
@@ -329,13 +341,44 @@ function TestEvent() {
                 
             </div>
 
+            {/* 頁籤 */}
             <div className="page-soul col-10">
-                <div >
+            
+                    {/* <img src={page_soul} alt="" />
                     <img src={page_soul} alt="" />
                     <img src={page_soul} alt="" />
-                    <img src={page_soul} alt="" />
-                    <img src={page_soul} alt="" />
-                </div>
+                    <img src={page_soul} alt="" /> */}
+
+
+                  {/* {data && data.totalPages ? (
+                    <div aria-label="Page navigation example">
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <a className="page-link" href="#/">
+                                    Previous
+                                </a>
+                            </li>
+                            {Array(10)
+                                .fill(1)
+                                .map((v, i) => (
+                                    <li className="page-item" key={'pagi' + i}>
+                                        <a className="page-link" href="#/">
+                                            {i + 1}
+                                        </a>
+                                    </li>
+                                ))}
+
+                            <li className="page-item">
+                                <a className="page-link" href="#/">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                ) : null} */}
+
+
+              
             </div>
         </div>
 

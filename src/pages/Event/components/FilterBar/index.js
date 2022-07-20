@@ -35,7 +35,6 @@ function FilterBar(props) {
   }
 
   const handleCheckedArea = (e) => {
-
     const value = e.target.value
     if (!areas.includes(value)) return setAreas([...areas, value])
 
