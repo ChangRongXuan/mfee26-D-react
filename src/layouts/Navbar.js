@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ".//../styles/_nav.css";
+import "../styles/_nav.css";
 
 // import AppRouter from "./AppRouter";
 

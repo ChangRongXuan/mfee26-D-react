@@ -5,29 +5,41 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // 版面頁面元件
 import Layout from './layouts/Layout'
 
-
-//頁面用元件
-import EventDetail from "./pages/EventDetail/EventDetail"; 
+//其他子頁面
+import Home from "./pages/Home";
 import EventList from "./pages/Event/EventList";
-
-// 組合用基本元件
-import Nav from "./components/Nav";
-import BackgroundLight from "./components/BackgroundLight";  //亮色主題
-// import BackgroundDark from "./components/BackgroundDark"; //暗色主題
+import EventDetail from "./pages/EventDetail/EventDetail"; 
+import Cart from "./pages/Cart/Cart"; 
 
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
-
-
-function App() {
+function Main() {
 
     const [cartNumber, setCartNumber] = useState('');
 
     return (
         <>
 
+            <BrowserRouter>
+                <Routes>
 
-            <Nav 
+                    <Route path='/' element={<Layout />}>
+                        
+                         {/* 首頁：index代表此路由中的預設子頁 */}
+                        <Route index element={<Home />} /> 
+
+
+
+
+
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+
+
+
+
+            {/* 舊的 但要記得cartnumber!!!! */}
+            {/* <Nav 
                 cartNumber={cartNumber}
                 setCartNumber={setCartNumber}
             />
@@ -38,7 +50,7 @@ function App() {
                     <Route path="/eventlist" element={<EventList/>} />
                     <Route path="/eventdetail" element={<EventDetail/>} />
                 </Routes>
-            </BrowserRouter>
+            </BrowserRouter> */}
 
         </>
     );
