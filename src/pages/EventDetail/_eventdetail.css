@@ -20,11 +20,12 @@
   width: 85%;
   height: 100%;
   margin: auto;
-  outline: 1px solid red;
 }
 
 .intro-bread{
-  height: 10%;
+  height: 5%;
+  color: black;
+  /* color:  white; */
 }
 
 .intro-box{

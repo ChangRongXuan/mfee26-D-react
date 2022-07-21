@@ -7,9 +7,9 @@ import Layout from './layouts/Layout'
 
 //其他子頁面
 import Home from "./pages/Home";
+import Event from "./pages/Event";
 import EventList from "./pages/Event/EventList";
 import EventDetail from "./pages/EventDetail/EventDetail"; 
-import Cart from "./pages/Cart/Cart"; 
 
 
 function Main() {
@@ -24,10 +24,13 @@ function Main() {
 
                     <Route path='/' element={<Layout />}>
                         
-                         {/* 首頁：index代表此路由中的預設子頁 */}
+                         {/* 首頁 - 子頁 */}
                         <Route index element={<Home />} /> 
 
-
+                        <Route path='/event' element={<Event />}>
+                            <Route index element={<EventList />} />
+                            <Route path=':eventSid' element={<EventDetail />} />
+                        </Route>
 
 
 
@@ -56,4 +59,4 @@ function Main() {
     );
 }
 
-export default App;
+export default Main;

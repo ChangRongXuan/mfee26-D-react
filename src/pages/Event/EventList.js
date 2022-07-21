@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import {Event_List_GET} from "../../config/ajax-path";
+import { Event_List_GET } from "../../config/ajax-path";
+import { Link } from 'react-router-dom'
 
 
 // CSS、圖片
 import '../../styles/bootstrap-grid.css';
 import './_eventlist.css'
 import "../../styles/style.css";
-import page_soul from "./imgs/soul.svg";
+// import page_soul from "./imgs/soul.svg"; //頁籤用圖片
 
 
 // 改為資料夾方式中的index.js
@@ -17,7 +18,7 @@ import SearchBar from './components/SearchBar'
 import SortBar from './components/SortBar';
 
 
-function TestEvent() {
+function EventList() {
 
 
 
@@ -74,8 +75,6 @@ function TestEvent() {
 }
 
 
-
-
   // 初始化資料-didMount
   useEffect(() => {
     // 先開起載入指示器
@@ -103,9 +102,6 @@ function TestEvent() {
 // type_sid: 2
 // value: 50
 
-
-
-  // 四個表單元素的處理方法
 
 
   //搜尋功能 -> 文字篩選
@@ -386,4 +382,4 @@ function TestEvent() {
   )
 }
 
-export default TestEvent;
+export default EventList;
