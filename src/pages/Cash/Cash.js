@@ -14,7 +14,7 @@ const Cash = (props) => {
 
 
  //定義 currentPage 這個 state，預設值是 OrderList
- const [currentPage, setCurrentPage] = useState('PersonInfor');
+const [currentPage, setCurrentPage] = useState('PersonInfor');
 
 return (
         <div className="cash-container">

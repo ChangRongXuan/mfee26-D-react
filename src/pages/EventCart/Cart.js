@@ -8,7 +8,8 @@ import "./_cart.css";
 
 import OrderList from "./components/OrderList"; //因為是引用index.js所以後可省略
 import Summary from "./components/Summary";
-import CashA from "./components/CashA";
+// import CashA from "./components/CashA";
+// import Cash from "../";
 
 import products from "./data/products.json"; //為了計算totalPrice金額
 
@@ -125,9 +126,9 @@ const Cart = (props) => {
                     />
                 )}
 
-                {currentPage === 'CashA' && (
+                {/* {currentPage === 'CashA' && (
                     <CashA setCurrentPage={setCurrentPage}/> 
-                )}
+                )} */}
                 
                 
                 <Summary 
