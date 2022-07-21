@@ -13,18 +13,14 @@ const EventDetail = () =>  {
   const [eventDetail, setEventDetail] = useState([])
 
   const navigate = useNavigate(); 
-  let { sid } = useParams(); //取得是哪個活動sid後發fetch
+  let { eventSid } = useParams(); //取得是哪個活動sid後發fetch //要跟Router列表名稱對應
 
 
   // 跟MySQL拿活動資料
   const  fetchEventDetail = async () => {
-    // const response =await axios.get('http://localhost:3600/events')
-    const response =await axios.get(`http://localhost:3600/events/${sid}`);
+    const response =await axios.get(`http://localhost:3600/events/${eventSid}`);
     setEventDetail(response.data);
-    console.log('有fetch成功')
-    console.log(response.data)
-}
-
+  }
 
   // 避免無窮迴圈
   useEffect(() => {
@@ -38,7 +34,6 @@ const EventDetail = () =>  {
     <>
     <div className="eventdetail-container">
         <div className="row">
-
 
 
           {/* 左方活動內容 */}
@@ -59,18 +54,20 @@ const EventDetail = () =>  {
 
                   <SimpleBar style={{ maxHeight: 250 }}>
 
-                  {eventDetail.map((v, i) => {
-                  return (
-                      <>
-                      <p>活動評價：</p>
-                      <p>活動時間：{v.start}</p>
-                      <p>活動地點：{v.place_other}</p>
-                      <p>招募人數：{v.limit_num}</p>
-                      <p>主辦單位：{v.npo_name}</p>
-                      <p>活動內容 & 注意事項：{v.intro}</p>
-                      <p>主辦單位介紹：</p>
-                      </>
-                      )})}
+                    {eventDetail.map((v, i) => {
+                    return (
+                        <>
+                        <div key={v.sid}>
+                          <p>活動評價：</p>
+                          <p>活動時間：{v.start}</p>
+                          <p>活動地點：{v.place_other}</p>
+                          <p>招募人數：{v.limit_num}</p>
+                          <p>主辦單位：{v.npo_name}</p>
+                          <p>活動內容 & 注意事項：{v.intro}</p>
+                          <p>主辦單位介紹：</p>
+                        </div>
+                        </>
+                        )})}
 
                   </SimpleBar>
 
@@ -86,18 +83,24 @@ const EventDetail = () =>  {
                 
                 {/* 參加 group */}
                 <div className="buy-btn">
-                    <div className="cost-price">
+
+                {eventDetail.map((v, i) => {
+                    return (
+                    <div className="cost-price" key={v.sid}>
                       <p>贊助費用</p>
-                      <h2>150</h2>
+                      <h2>{v.price}</h2>
                       <p>陰德值獎勵</p>
-                      <h2>50</h2>
+                      <h2>{v.value}</h2>
                     </div>
+                    )})}
 
                     <div className="btn-group">
                       <button className="btn-m btn-pri" >來去贊助</button>
                       <button className="btn-m btn-pri" >加入購物車</button>
                       <button className="btn-m btn-pri" >繼續購物</button>
                     </div>
+
+                  
 
                 </div>
 
