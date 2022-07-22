@@ -110,9 +110,6 @@ const Cart = (props) => {
 
 
 
-
-
-
     return (
         <div className="cart-container">
             <div className="row">

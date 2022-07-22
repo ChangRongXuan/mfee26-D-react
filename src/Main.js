@@ -1,5 +1,5 @@
 // 使用套件
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // 版面頁面元件
@@ -11,13 +11,13 @@ import Event from "./pages/Event";
 import EventList from "./pages/Event/EventList";
 import EventDetail from "./pages/EventDetail/EventDetail"; 
 import OrderSteps from "./pages/OrderSteps";
-// import EventCart from "./pages/EventCart/Cart"; 
+import EventCart from "./pages/EventCart/Cart"; 
 // import Cash from "./pages/Cash/Cash"; 
 
 
 function Main() {
 
-    // const [cartNumber, setCartNumber] = useState('');
+    const [cartNumber, setCartNumber] = useState('');
 
     return (
         <>
@@ -25,7 +25,9 @@ function Main() {
             <BrowserRouter>
                 <Routes>
 
-                    <Route path='/' element={<Layout />}>
+                    <Route path='/' element={<Layout 
+                                                cartNumber={cartNumber}
+                                                setCartNumber={setCartNumber} />}>
                         
                          {/* 首頁 - 子頁 */}
                         <Route index element={<Home />} /> 
@@ -37,13 +39,16 @@ function Main() {
                         </Route>
 
                         {/* 購物車 - 子頁 */}
-                        <Route path='/ordersteps' element={<OrderSteps />} />
+                        <Route path='/ordersteps' element={<OrderSteps 
+                                                            cartNumber={cartNumber}
+                                                            setCartNumber={setCartNumber}/>} />
+
+                        {/* 購物車 - 舊版 */}
+                        <Route path='/eventcart' element={<EventCart />} />
 
                     </Route>
                 </Routes>
             </BrowserRouter>
-
-
 
 
             {/* 舊的 但要記得cartnumber!!!! */}

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 // 子頁面(區域)
-import Cart from './sub-pages/Cart'
-import Shipping from './sub-pages/Shipping'
-import Payment from './sub-pages/Payment'
-import OrderDetail from './sub-pages/OrderDetail'
+import Cart from './sub-pages/Cart' //購物車明細
+import Shipping from './sub-pages/Shipping' //填寫地址姓名
+import Payment from './sub-pages/Payment' //信用卡付款
+import OrderDetail from './sub-pages/OrderDetail'  //已付款清單
 
 // 進度條
 import ProgressBar from './components/ProgressBar'
@@ -12,7 +12,10 @@ import ProgressBar from './components/ProgressBar'
 // css樣式
 // import './styles/OrderSteps.css'
 
-function OrderSteps() {
+function OrderSteps(props) {
+
+  const { cartNumber, setCartNumber } = props; //購物車數字props
+
   const maxSteps = 4
 
   const [step, setStep] = useState(1)
@@ -83,6 +86,8 @@ function OrderSteps() {
         <BlockComponent
           shipping={shipping}
           setShippingData={setShippingData}
+          cartNumber={cartNumber}
+          setCartNumber={setCartNumber}
         />
       </div>
 

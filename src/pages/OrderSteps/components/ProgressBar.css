@@ -1,9 +1,12 @@
 .container {
-  width: 100%;
+  width: 85%;
+  padding-top: 120px;
 }
 
 .progressbar {
   counter-reset: step;
+  width: 80%;
+  margin: auto;
 }
 
 .progressbar li {
