@@ -1,6 +1,9 @@
 
-import cart_step_1 from "../../imgs/cart-step-1.svg";
+import cart_step_1 from "../../imgs/cart-step-1.svg";  //先暫時用老師的
 import scroll_down from "../../imgs/scroll-down.svg";
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
+
 
 // 不用引入產品JSON檔案，因為已copy+改良一個新Array(productsInorder)並props進來
 // import products from '../../data/products'; 
@@ -28,6 +31,7 @@ function OrderList(props) {
                     <img src={cart_step_1} alt="" />
                 </div>
 
+            <SimpleBar style={{ maxHeight: 400, maxWidth:1000 }}>
                 {/* 購物車條列放這邊 */}
                 <div className="cart-list-window">
                     <div className="cart-list-wrap">
@@ -100,10 +104,11 @@ function OrderList(props) {
 
                     </div>
                 </div>
+            </SimpleBar>
 
-                <div className="scroll-down">
+                {/* <div className="scroll-down">
                     <img src={scroll_down} alt="" />
-                </div>
+                </div> */}
             </div>
         </>
     );

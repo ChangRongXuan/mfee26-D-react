@@ -1,5 +1,6 @@
 import delete_cross from "../../imgs/delete-cross.svg";
 
+
 function EventItem(props) {
     // 定義每個商品物件
 
@@ -88,6 +89,7 @@ function EventItem(props) {
                 </div>
             </div>
         </>
+
     );
 }
 

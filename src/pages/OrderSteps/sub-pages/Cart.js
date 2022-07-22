@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import "../../../styles/style.css";
 import "../../../styles/bootstrap-grid.css";
 import "../styles/_cart.css";
+// import SimpleBar from 'simplebar-react';
+// import 'simplebar/dist/simplebar.min.css';
 
-import OrderList from "../components/OederList"; //因為是引用index.js所以後可省略
+import OrderList from "../components/OrderList"; //因為是引用index.js所以後可省略
 import Summary from "../components/Summary";
 
 
@@ -101,15 +103,17 @@ const Cart = (props) => {
 
 
 
-  return (
+return (
     <>
-          <div className="cart-container">
+        <div className="cart-container">
             <div className="row">
-                
+            
+            
                 <OrderList 
                     productsInorder={productsInorder} 
                     setProductsInorder={setProductsInorder}  
                     />
+            
                 
                 <Summary 
                     totalNumber={calcTotalNumber()} 
@@ -120,6 +124,7 @@ const Cart = (props) => {
                     volunPrice={calcVolunTotalPrice()}
                     setCurrentPage={setCurrentPage}  
                     /> 
+                
 
                 {/* totalPrice先暫時寫300 */}
             </div>

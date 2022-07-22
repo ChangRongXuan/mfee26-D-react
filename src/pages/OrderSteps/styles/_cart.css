@@ -5,8 +5,8 @@
   color: black;
   list-style: none;
   position: absolute;
-  /* /* top */
-  top:90px; 
+  /* top:90px;  */
+  top:150px; 
 }
 
 .col, ul{
@@ -41,7 +41,7 @@
 }
 
 .cart-list-window{
-  padding-right: 50px;
+  /* padding-right: 50px; */
   height: 75%;
   /* overflow: hidden; */
 }
