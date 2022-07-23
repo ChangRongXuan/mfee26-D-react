@@ -95,7 +95,9 @@ const EventDetail = () =>  {
                     )})}
 
                     <div className="btn-group">
-                      <button className="btn-m btn-pri" >直接結帳</button>
+                      <button className="btn-m btn-pri" onClick={()=>{
+                          navigate('/ordersteps', {replace: true})}
+                          }  >直接結帳</button>
                       <button className="btn-m btn-pri" >加入購物車</button>
                       <button className="btn-m btn-pri" onClick={()=>{
                           navigate('/event', {replace: true})}

@@ -28,10 +28,12 @@ function OrderList(props) {
                     <input type="checkbox" id="cbox" />
                     <p className="caption">全部刪除({productsInorder.length})</p>
 
-                    <img src={cart_step_1} alt="" />
+                    {/* <img src={cart_step_1} alt="" /> */}
                 </div>
 
             <SimpleBar style={{ maxHeight: 400, maxWidth:1000 }}>
+
+            
                 {/* 購物車條列放這邊 */}
                 <div className="cart-list-window">
                     <div className="cart-list-wrap">

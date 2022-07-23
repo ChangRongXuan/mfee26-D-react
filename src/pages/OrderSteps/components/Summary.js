@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router-dom";
+
+
 function Summary(props) {
+
+    const navigate = useNavigate(); 
+
     const {
         totalNumber,
         totalPrice,
@@ -6,7 +12,6 @@ function Summary(props) {
         donatePrice,
         volunNumber,
         volunPrice,
-        setCurrentPage,
     } = props; //從Cart.js傳來的props
 
     return (
@@ -38,15 +43,18 @@ function Summary(props) {
                     </div>
                 </div>
 
-                <div className="cart-btn">
-                    <button className="btn-m btn-pri">繼續選購</button>
+
+                {/* 新的方向鍵已放在 OrderSteps的 index.js */}
+                {/* <div className="cart-btn">
+                    <button className="btn-m btn-pri" onClick={()=>{
+                        navigate('/event', {replace: true})}
+                        } >繼續選購</button>
+                        
                     <button
-                        className="btn-m btn-pri"
-                        onClick={() => setCurrentPage("CashA")}
-                    >
-                        前往結帳
+                        className="btn-m btn-pri">
+                        下一步
                     </button>
-                </div>
+                </div> */}
             </div>
         </>
     );

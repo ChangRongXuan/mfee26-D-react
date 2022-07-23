@@ -60,6 +60,9 @@
   margin: auto;
 }
 
+.cart-list-wrap{
+  padding-right: 50px;
+}
 
 
 .cart-list{
@@ -148,10 +151,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 14%;
+  position: absolute;
+  bottom: 100px;
+  right: 105px;
 }
 
 .cart-btn>button{
-  width: 48%;
+  width: 45%;
   margin-top: 15px;
 }
 

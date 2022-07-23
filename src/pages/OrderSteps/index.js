@@ -1,20 +1,23 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 // 子頁面(區域)
-import Cart from './sub-pages/Cart' //購物車明細
-import Shipping from './sub-pages/Shipping' //填寫地址姓名
-import Payment from './sub-pages/Payment' //信用卡付款
-import OrderDetail from './sub-pages/OrderDetail'  //已付款清單
+import Cart from './sub-pages/Cart'; //購物車明細
+import Shipping from './sub-pages/Shipping'; //填寫地址姓名
+import Payment from './sub-pages/Payment'; //信用卡付款
+import OrderDetail from './sub-pages/OrderDetail';  //已付款清單
 
 // 進度條
-import ProgressBar from './components/ProgressBar'
+import ProgressBar from './components/ProgressBar';
 
-// css樣式
-// import './styles/OrderSteps.css'
+
 
 function OrderSteps(props) {
 
+  const navigate = useNavigate(); 
   const { cartNumber, setCartNumber } = props; //購物車數字props
+  // const [cartNumber, setCartNumber] = useState('');
 
   const maxSteps = 4
 
@@ -92,13 +95,27 @@ function OrderSteps(props) {
       </div>
 
       {/* 按鈕 */}
-      <div>
-        <button onClick={prev} disabled={step === 1}>
-          上一步
-        </button>
-        <button onClick={next} disabled={step === maxSteps}>
+      <div className='cart-btn'>
+
+        { step===1 ? (
+          <button 
+            className="btn-m btn-pri" 
+            onClick={()=>{navigate('/event', {replace: true})}
+        } >繼續選購</button>
+        ):(
+          <button 
+            className="btn-m btn-pri" 
+            onClick={prev} 
+            disabled={step === 1}>
+            上一步
+          </button>
+        ) }
+      
+        
+        <button className="btn-m btn-pri" onClick={next} disabled={step === maxSteps}>
           下一步
         </button>
+
       </div>
     </>
   )

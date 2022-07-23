@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "../styles/_nav.css";
 
+import { BsFillPersonFill } from 'react-icons/bs';
+import { FaShoppingCart } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
+
 // import AppRouter from "./AppRouter";
 
 import nav_logo from "../imgs/nav_logo.svg";
@@ -10,8 +14,8 @@ import nav_soul from "../imgs/nav_soul.svg";
 const Nav = (props) => {
 
     const [lightBox, setLightBox] = useState("lightbox_hidden"); //預設是隱藏
-    const { cartNumber, setCartNumber } = props; //購物車數字props
-
+    // const { cartNumber, setCartNumber } = props; //購物車數字props
+    
     return (
         <>
             {/* 這邊是Navbar光箱 */}
@@ -53,24 +57,30 @@ const Nav = (props) => {
                         <img src={nav_logo} alt="" />
                     </div>
 
-                    <div className="col">
+                    <div className="col"y>
                         <img src={nav_soul} alt="" />
 
                         {/* 這邊處理購物車icon跳數字 */}
                         <div className="cart-icon">
                             {/* <Link to="/cart"> */}
-                                <i className="fa-solid fa-cart-shopping"></i>
-                                <span>{cartNumber}</span>
+                                <FaShoppingCart/>
+                                {/* <i className="fa-solid fa-cart-shopping"></i> */}
+                                {/* <span>{cartNumber}</span> */}
+                                <span>{localStorage.getItem('event_cart_num')}</span>
                             {/* </Link> */}
                         </div>
 
-                        <i className="fa-solid fa-user"></i>
-                        <i
+                        <BsFillPersonFill/>
+
+                        <FaBars onClick={() => {
+                                setLightBox("lightbox_visible");
+                            }}/>
+                        {/* <i
                             className="fa-solid fa-bars"
                             onClick={() => {
                                 setLightBox("lightbox_visible");
                             }}
-                        ></i>
+                        ></i> */}
                     </div>
                 </div>
             </nav>

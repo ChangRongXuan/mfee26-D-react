@@ -93,6 +93,7 @@ const Cart = (props) => {
 
     if (calcTotalNumber()>0){
         setCartNumber(calcTotalNumber());
+        localStorage.setItem('event_cart_num',calcTotalNumber());
     } else{
         setCartNumber('')
     }
