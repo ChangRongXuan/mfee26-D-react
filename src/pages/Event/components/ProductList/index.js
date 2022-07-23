@@ -10,7 +10,7 @@ function ProductList(props) {
         {events.map((v, i) => {
             return (
 
-              <Link to={`/event/${v.sid}`}  className="event-card" key={v.sid}>
+              <Link to={`/events/${v.sid}`}  className="event-card" key={v.sid}>
 
                     <div className="good-cost btn-s">陰德值：{v.value}</div>
                     <div className="event-type btn-s"> {v.name} </div>

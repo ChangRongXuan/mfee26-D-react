@@ -16,13 +16,13 @@ import products from "../data/event.json"; //為了計算totalPrice金額
 
 // 計算一開始要useState[]裡要有幾個1([1,1,1]), 直接把products(原JSON值)新加count屬性後形成新Array 
 const initState = (productArray) => {
-  const state = []
+const state = []
 
   // 每多一項就push一個1進陣列
-  for ( let i=0; i< productArray.length; i++){
+for ( let i=0; i< productArray.length; i++){
       state.push({...productArray[i], count:1}) //複製array+多加count屬性進去
-  }
-  return state;
+}
+return state;
 }
 
 
@@ -131,7 +131,7 @@ return (
             </div>
         </div>
     </>
-  )
+    )
 }
 
 export default Cart

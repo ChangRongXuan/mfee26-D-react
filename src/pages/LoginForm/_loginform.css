@@ -1,0 +1,10 @@
+.login-wrap{
+  width: 20%;
+  height: 20%;
+  padding-top: 150px;
+}
+
+.login-wrap>*{
+  margin-top: 20px;
+  margin-left: 50px;
+}

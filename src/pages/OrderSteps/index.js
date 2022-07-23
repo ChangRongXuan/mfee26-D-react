@@ -100,7 +100,7 @@ function OrderSteps(props) {
         { step===1 ? (
           <button 
             className="btn-m btn-pri" 
-            onClick={()=>{navigate('/event', {replace: true})}
+            onClick={()=>{navigate('/events', {replace: true})}
         } >繼續選購</button>
         ):(
           <button 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-// import { Event_Detail_GET } from "../../config/ajax-path";
 
 import '../../styles/bootstrap-grid.css';
 import './_eventdetail.css';
@@ -41,7 +40,7 @@ const EventDetail = () =>  {
 
               {/* 考慮不放麵包屑 */}
               <button className="intro-bread" onClick={()=>{
-                navigate('/event', {replace: true})}
+                navigate('/events', {replace: true})}
               }>  返回上一頁</button>
 
               <div className="intro-box">
@@ -100,7 +99,7 @@ const EventDetail = () =>  {
                           }  >直接結帳</button>
                       <button className="btn-m btn-pri" >加入購物車</button>
                       <button className="btn-m btn-pri" onClick={()=>{
-                          navigate('/event', {replace: true})}
+                          navigate('/events', {replace: true})}
                           } >繼續購物</button>
                     </div>
 
