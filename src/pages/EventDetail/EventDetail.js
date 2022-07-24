@@ -18,7 +18,7 @@ const EventDetail = () =>  {
   // 此段模擬會員登入------------------------------------------------------
   let memberlogin = {
     authorized: true, 
-    sid: 50,
+    sid: 100,
     account: 'membertest',
     token:'12345'
   }
@@ -54,7 +54,6 @@ const EventDetail = () =>  {
   // 避免無窮迴圈(DidMount)
   useEffect(() => {
     fetchEventDetail();
-    console.log('useEffect有被呼叫')
   }, [])
 
 
@@ -75,10 +74,16 @@ const EventDetail = () =>  {
       .then(obj=>{
       console.log(obj)
       })
-
   }; 
 
 
+  // 目前實驗起來，用localStorage沒辦法及時更新
+  // 更新購物車localStorage數量 function 
+  // const  addLocalStorageNum = () =>{
+  //   let nowEventCartNum = +(localStorage.getItem('event_cart_num')); //字串轉num
+  //   nowEventCartNum++;
+  //   localStorage.setItem('event_cart_num',nowEventCartNum);
+  // }
 
 
   return(
@@ -161,7 +166,7 @@ const EventDetail = () =>  {
                       { authorized ? 
                       (<button className="btn-m btn-pri" onClick={()=>{
                         fetchEventAddCart();
-                        alert('商品已加至購物車') 
+                        alert('商品已加至購物車'); 
                       }}>加入購物車</button> ):
 
 

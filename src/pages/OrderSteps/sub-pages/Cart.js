@@ -22,9 +22,13 @@ const initState = (eventArray) => {
 
 const Cart = (props) => {
 
+    // 透過localStorage 取得登入會員sid 
+    let memberinfor = JSON.parse(localStorage.getItem('auth'));
+    let membersid = Object.values(memberinfor)[1] ;
+
     // 一進購物車頁面就跟MySQL拿購物車資訊(取得JSON)
     const  fetchEventShowCart = async () => {
-        const events =await axios.get('http://localhost:3600/eventcarts/showcart');
+        const events =await axios.get(`http://localhost:3600/eventcarts/showcart?member_sid=${membersid}`);
         setEventCart(initState(events.data));
     }
 
@@ -32,6 +36,7 @@ const Cart = (props) => {
     useEffect(() => {
     fetchEventShowCart();
     }, [])
+
 
     const [eventCart, setEventCart] = useState([]); 
 
@@ -88,8 +93,6 @@ const Cart = (props) => {
             }
 
 
-            
-
     //定義 currentPage 這個 state，預設值是 OrderList
     const [currentPage, setCurrentPage] = useState('OrderList');
 
@@ -97,12 +100,12 @@ const Cart = (props) => {
     // 購物車 顯示商品總數量 
     const { cartNumber, setCartNumber } = props; 
 
-        // if (calcTotalNumber()>0){
-    //     setCartNumber(calcTotalNumber());
-    //     localStorage.setItem('event_cart_num',calcTotalNumber());
-    // } else{
-    //     setCartNumber('')
-    // }
+    if (calcTotalNumber()>0){
+    setCartNumber(calcTotalNumber());
+    localStorage.setItem('event_cart_num',calcTotalNumber());
+    } else{
+    setCartNumber('')
+    }
 
 
 
@@ -111,13 +114,14 @@ return (
         <div className="cart-container">
             <div className="row">
             
-            
                 <OrderList 
                     eventCart={eventCart}
                     setEventCart={setEventCart}
+                    totalNumber={calcTotalNumber()} 
+                    donateNumber={calcDonateNumber()}  
+                    volunNumber={calcVolunNumber()} 
                     />
             
-                
                 <Summary 
                     totalNumber={calcTotalNumber()} 
                     totalPrice={calcTotalPrice()}
@@ -127,8 +131,6 @@ return (
                     volunPrice={calcVolunTotalPrice()}
                     /> 
                 
-
-                {/* totalPrice先暫時寫300 */}
             </div>
         </div>
     </>

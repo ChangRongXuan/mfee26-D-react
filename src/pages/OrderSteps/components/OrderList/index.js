@@ -10,9 +10,8 @@ import EventItem from "./EventItem";
 
 function OrderList(props) {
 
-    // const { productsInorder, setProductsInorder, eventCart, setEventCart } = props //從Cart.js裡傳來的props
-    const { eventCart, setEventCart } = props //從Cart.js裡傳來的props
-
+    //從Cart.js裡傳來的props
+    const { totalNumber, donateNumber, volunNumber, eventCart, setEventCart } = props 
 
     return (
         <>
@@ -25,6 +24,10 @@ function OrderList(props) {
 
                     <input type="checkbox" id="cbox" />
                     <p className="caption">清空({eventCart.length})</p>
+
+                    <p className="caption">--共{totalNumber}樣商品--</p>
+                    <p className="caption">--贊助: {donateNumber}--</p>
+                    <p className="caption">--志工: {volunNumber}--</p>
 
                     {/* <img src={cart_step_1} alt="" /> */}
                 </div>
