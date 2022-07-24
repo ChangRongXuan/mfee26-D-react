@@ -1,106 +1,108 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import "../../../styles/style.css";
 import "../../../styles/bootstrap-grid.css";
 import "../styles/_cart.css";
-// import SimpleBar from 'simplebar-react';
-// import 'simplebar/dist/simplebar.min.css';
 
 import OrderList from "../components/OrderList"; //因為是引用index.js所以後可省略
 import Summary from "../components/Summary";
 
 
-import products from "../data/event.json"; //為了計算totalPrice金額
-
-
-
-// 計算一開始要useState[]裡要有幾個1([1,1,1]), 直接把products(原JSON值)新加count屬性後形成新Array 
-const initState = (productArray) => {
-const state = []
-
-  // 每多一項就push一個1進陣列
-for ( let i=0; i< productArray.length; i++){
-      state.push({...productArray[i], count:1}) //複製array+多加count屬性進去
-}
-return state;
-}
-
+// 一個公式finction
+// 計算一開始要useState[]裡要有幾個1([1,1,1])
+const initState = (eventArray) => {
+    const state = []
+      // 每多一項就push一個1進陣列
+    for ( let i=0; i< eventArray.length; i++){
+          state.push({...eventArray[i], count:1}) //複製array+多加count屬性進去
+    }
+    return state;
+    }
 
 const Cart = (props) => {
 
-
-  // count是目前購買了幾樣商品
-    // 為了要達到不同商品數量(count)分開計，useState內放陣列[]
-    const [productsInorder, setProductsInorder] = useState(initState(products)); //紀錄數量初始值，第一樣、第二樣商品逐筆紀錄
-
-
-    // 計算總數量
-    const calcTotalNumber = () => {
-        let total = 0;
-        for(let i=0;i<productsInorder.length;i++){
-            total+=productsInorder[i].count;
-            console.log(productsInorder[i].program_type);  //是有辦法顯示出來的
-        }
-
-        return total;
-    }
-    // 計算總金額
-    const calcTotalPrice = () => {
-        let total = 0;
-        for(let i=0;i<productsInorder.length;i++){
-            total+=productsInorder[i].count * productsInorder[i].price
-        }
-        return total
+    // 一進購物車頁面就跟MySQL拿購物車資訊(取得JSON)
+    const  fetchEventShowCart = async () => {
+        const events =await axios.get('http://localhost:3600/eventcarts/showcart');
+        setEventCart(initState(events.data));
     }
 
-    // 計算「贊助」總數量
-    const calcDonateNumber = () => {
-        let total = 0;
-        for(let i=0;i<productsInorder.length;i++){
-            productsInorder[i].program_type === '贊助' ? total+=productsInorder[i].count : total+=0
-        }
-        return total
-    }
-    // 計算「贊助」總金額
-    const calcDonateTotalPrice = () => {
-        let total = 0;
-        for(let i=0;i<productsInorder.length;i++){
-            productsInorder[i].program_type === '贊助' ? total+=productsInorder[i].count*productsInorder[i].price : total+=0
-        }
-        return total
-    }
+    // 避免無窮迴圈(DidMount)
+    useEffect(() => {
+    fetchEventShowCart();
+    }, [])
 
-    // 計算「志工」總數量
-    const calcVolunNumber = () => {
-        let total = 0;
-        for(let i=0;i<productsInorder.length;i++){
-            productsInorder[i].program_type === '志工' ? total+=productsInorder[i].count : total+=0
-        }
-        return total
-    }
-    // 計算「志工」總金額
-    const calcVolunTotalPrice = () => {
-        let total = 0;
-        for(let i=0;i<productsInorder.length;i++){
-            productsInorder[i].program_type === '志工' ? total+=productsInorder[i].count*productsInorder[i].price : total+=0
-        }
-        return total;
-    }
+    const [eventCart, setEventCart] = useState([]); 
+
+            // 計算總數量
+            const calcTotalNumber = () => {
+                let total = 0;
+                for(let i=0;i<eventCart.length;i++){
+                    total+=eventCart[i].count;
+                }
+
+                return total;
+            }
+            // 計算總金額
+            const calcTotalPrice = () => {
+                let total = 0;
+                for(let i=0;i<eventCart.length;i++){
+                    total+=eventCart[i].count * eventCart[i].price
+                }
+                return total
+            }
+
+            // 計算「贊助」總數量(活動限定報名1次)
+            const calcDonateNumber = () => {
+                let total = 0;
+                for(let i=0;i<eventCart.length;i++){
+                    eventCart[i].program_type === '贊助' ? total+=eventCart[i].count : total+=0
+                }
+                return total
+            }
+            // 計算「贊助」總金額
+            const calcDonateTotalPrice = () => {
+                let total = 0;
+                for(let i=0;i<eventCart.length;i++){
+                    eventCart[i].program_type === '贊助' ? total+=eventCart[i].count*eventCart[i].price : total+=0
+                }
+                return total
+            }
+
+            // 計算「志工」總數量 (活動限定報名1次)
+            const calcVolunNumber = () => {
+                let total = 0;
+                for(let i=0;i<eventCart.length;i++){
+                    eventCart[i].program_type === '志工' ? total+=eventCart[i].count : total+=0
+                }
+                return total
+            }
+            // 計算「志工」總金額
+            const calcVolunTotalPrice = () => {
+                let total = 0;
+                for(let i=0;i<eventCart.length;i++){
+                    eventCart[i].program_type === '志工' ? total+=eventCart[i].count*eventCart[i].price : total+=0
+                }
+                return total;
+            }
+
+
+            
+
+    //定義 currentPage 這個 state，預設值是 OrderList
+    const [currentPage, setCurrentPage] = useState('OrderList');
 
     // 待處理：Cart沒有在index.js裡面 數字就不會跳出來
     // 購物車 顯示商品總數量 
     const { cartNumber, setCartNumber } = props; 
 
-    if (calcTotalNumber()>0){
-        setCartNumber(calcTotalNumber());
-        localStorage.setItem('event_cart_num',calcTotalNumber());
-    } else{
-        setCartNumber('')
-    }
-
-
-    //定義 currentPage 這個 state，預設值是 OrderList
-    const [currentPage, setCurrentPage] = useState('OrderList');
+        // if (calcTotalNumber()>0){
+    //     setCartNumber(calcTotalNumber());
+    //     localStorage.setItem('event_cart_num',calcTotalNumber());
+    // } else{
+    //     setCartNumber('')
+    // }
 
 
 
@@ -111,8 +113,8 @@ return (
             
             
                 <OrderList 
-                    productsInorder={productsInorder} 
-                    setProductsInorder={setProductsInorder}  
+                    eventCart={eventCart}
+                    setEventCart={setEventCart}
                     />
             
                 
@@ -123,7 +125,6 @@ return (
                     donatePrice={calcDonateTotalPrice()}
                     volunNumber={calcVolunNumber()} 
                     volunPrice={calcVolunTotalPrice()}
-                    setCurrentPage={setCurrentPage}  
                     /> 
                 
 

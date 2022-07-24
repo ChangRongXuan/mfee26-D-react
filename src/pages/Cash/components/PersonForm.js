@@ -99,7 +99,7 @@ const handleChange = (e) => {
 
     // 如果Router已有upload功能，可直接用formdata
     // 送到伺服器(fetch/ajax)
-    fetch('http://localhost:3600/carts/person', {
+    fetch('http://localhost:3600/eventcarts/person', {
       method: 'POST',
       body: fd, //目前送出格式為multiple formdata
     })

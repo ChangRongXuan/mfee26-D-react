@@ -4,5 +4,7 @@
 export const SERVER =  'http://localhost:3600' ;
 
 // 檔名界定 GET/POST 方法
+
 export const Event_List_GET =  `${SERVER}/events `;
+
 

@@ -8,7 +8,7 @@ function EventItem(props) {
     //     sid: 1,
     //     act_title: '流浪狗認養活動',
     //     type_sid: 2,
-    //     program_type: 2,
+    //     program_type: '贊助',
     //     price: 500,
     //     value: 50,
     //     start: 2022-06-18 22:24:00,
@@ -18,8 +18,6 @@ function EventItem(props) {
     //     limit_num: 50
     // }
 
-    // JSON檔案其實可以直接在這個檔案再引用？
-    // 解構從index.js傳來的props
     const {
         sid,
         act_title,
@@ -57,26 +55,13 @@ function EventItem(props) {
                     <p>{npo_name}</p>
                 </div>
 
+                {/* 活動/贊助限定1場，不提供+- */}
                 <div className="num-choose">
-                    <a
-                        href="#/"
-                        onClick={() => {
-                            setCount(count - 1);
-                        }}
-                    >
-                        -
-                    </a>
-                    <a href="#/" className="border">
-                        {count}
-                    </a>
-                    <a
-                        href="#/"
-                        onClick={() => {
-                            setCount(count + 1);
-                        }}
-                    >
-                        +
-                    </a>
+                    {/* <a href="#/" onClick={()=>{setCount(count - 1);}}> 
+                    -</a> */}
+                    {/* <a href="#/" className="border"> {count} </a> */}
+                    {/* <a href="#/" onClick={()=>{ setCount(count + 1);}}>
+                    +</a> */}
                 </div>
 
                 <div className="cost">

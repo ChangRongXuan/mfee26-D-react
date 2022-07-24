@@ -12,7 +12,7 @@ function Layout(props) {
     <>
       {/* 導覽列 */}
       <Navbar  cartNumber={cartNumber}
-               setCartNumber={setCartNumber}/>
+              setCartNumber={setCartNumber}/>
 
       {/* 背景主題 */}
       <BackgroundDark />

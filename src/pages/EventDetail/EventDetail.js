@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,  useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -7,7 +7,37 @@ import './_eventdetail.css';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
+// 處理會員狀態
+import AuthContext from '../../layouts/Context/AuthContext';
+
+
 const EventDetail = () =>  {
+
+
+
+  // 此段模擬會員登入------------------------------------------------------
+  let memberlogin = {
+    authorized: true, 
+    sid: 50,
+    account: 'membertest',
+    token:'12345'
+  }
+
+  localStorage.setItem('auth', JSON.stringify(memberlogin));
+
+
+  // 此段模擬會員登出------------------------------------------------------
+  // let memberlogout = {
+  //   authorized: false, 
+  //   sid: 0,
+  //   account: '',
+  //   token:''}
+
+  // localStorage.setItem('auth', JSON.stringify(memberlogout));
+
+
+  // 處理會員狀態 
+  const { authorized, sid, account, token} = useContext(AuthContext);
 
   const [eventDetail, setEventDetail] = useState([])
 
@@ -15,17 +45,39 @@ const EventDetail = () =>  {
   let { eventSid } = useParams(); //取得是哪個活動sid後發fetch //要跟Router列表名稱對應
 
 
-  // 跟MySQL拿活動資料
-  const  fetchEventDetail = async () => {
+  // 一進頁面就跟MySQL拿活動資料(先透過useParams取得活動sid)
+    const  fetchEventDetail = async () => {
     const response =await axios.get(`http://localhost:3600/events/${eventSid}`);
     setEventDetail(response.data);
   }
 
-  // 避免無窮迴圈
+  // 避免無窮迴圈(DidMount)
   useEffect(() => {
     fetchEventDetail();
     console.log('useEffect有被呼叫')
   }, [])
+
+
+  // 透過localStorage 取得登入會員sid 
+  let memberinfor = JSON.parse(localStorage.getItem('auth'));
+  let membersid = Object.values(memberinfor)[1] ;
+
+  // 按下「加入購物車」將資料存進MySQL //因為axios方式不熟 先用fetch方式POST
+  const  fetchEventAddCart =  async () => {
+      fetch('http://localhost:3600/eventcarts/addcart', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: `event_sid=${eventSid}&member_sid=${membersid}`
+      })
+      .then(r=>r.json())
+      .then(obj=>{
+      console.log(obj)
+      })
+
+  }; 
+
 
 
 
@@ -52,7 +104,6 @@ const EventDetail = () =>  {
 
 
                   <SimpleBar style={{ maxHeight: 250 }}>
-
                     {eventDetail.map((v, i) => {
                     return (
                         <>
@@ -67,7 +118,6 @@ const EventDetail = () =>  {
                         </div>
                         </>
                         )})}
-
                   </SimpleBar>
 
                 
@@ -91,13 +141,35 @@ const EventDetail = () =>  {
                       <p>陰德值獎勵</p>
                       <h2>{v.value}</h2>
                     </div>
-                    )})}
+                )})}
 
                     <div className="btn-group">
-                      <button className="btn-m btn-pri" onClick={()=>{
-                          navigate('/ordersteps', {replace: true})}
-                          }  >直接結帳</button>
-                      <button className="btn-m btn-pri" >加入購物車</button>
+
+                    {/* 會員檢查: 沒登入跳通知 */}
+
+                      { authorized ? 
+                        ( <button className="btn-m btn-pri" onClick={()=>{
+                            navigate('/ordersteps', {replace: true})}
+                            }  >直接結帳</button>):
+                      
+                        ( <button className="btn-m btn-pri" onClick={()=>{
+                            alert('請先登入會員')  }
+                            }  >直接結帳</button>
+                        )
+                      }
+                  
+                      { authorized ? 
+                      (<button className="btn-m btn-pri" onClick={()=>{
+                        fetchEventAddCart();
+                        alert('商品已加至購物車') 
+                      }}>加入購物車</button> ):
+
+
+                      (<button className="btn-m btn-pri" onClick={()=>{
+                            alert('請先登入會員')}} >加入購物車</button> )
+                      }
+                      
+
                       <button className="btn-m btn-pri" onClick={()=>{
                           navigate('/events', {replace: true})}
                           } >繼續購物</button>

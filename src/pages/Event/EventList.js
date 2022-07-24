@@ -21,7 +21,6 @@ import SortBar from './components/SortBar';
 function EventList() {
 
 
-
   // 活動用的資料
   // 1. 從伺服器來的原始資料
   const [eventRaw, setEventRaw] = useState([])
@@ -68,7 +67,6 @@ function EventList() {
 
 // 跟MySQL拿活動資料(目前暫時限8筆)
   const  fetchEvent = async () => {
-    // const response =await axios.get('http://localhost:3600/events')
     const response =await axios.get(Event_List_GET)
     setDisplayEvent(response.data); //讓component進入DidUpdate階段
     setEventRaw(response.data); //讓component進入DidUpdate階段

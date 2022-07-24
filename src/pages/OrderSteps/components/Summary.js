@@ -1,9 +1,5 @@
-import { useNavigate } from "react-router-dom";
-
-
 function Summary(props) {
 
-    const navigate = useNavigate(); 
 
     const {
         totalNumber,
@@ -43,18 +39,6 @@ function Summary(props) {
                     </div>
                 </div>
 
-
-                {/* 新的方向鍵已放在 OrderSteps的 index.js */}
-                {/* <div className="cart-btn">
-                    <button className="btn-m btn-pri" onClick={()=>{
-                        navigate('/event', {replace: true})}
-                        } >繼續選購</button>
-                        
-                    <button
-                        className="btn-m btn-pri">
-                        下一步
-                    </button>
-                </div> */}
             </div>
         </>
     );
