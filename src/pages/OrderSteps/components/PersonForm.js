@@ -4,12 +4,20 @@ import "../../../styles/style.css";
 import "../../../styles/bootstrap-grid.css";
 import '../styles/_cart.css';
 
-function PersonForm(props) {
 
-  const {setCurrentPage} = props;
+
+
+function PersonForm() {
+
+
+  // 透過localStorage 取得登入會員sid 
+  let memberinfor = JSON.parse(localStorage.getItem('auth'));
+  const membersid = Object.values(memberinfor)[1] ;
+
 
   // multiple State
   const [myInfor, setMyInfor] = useState({
+  member_sid: `${membersid}`,
   fullname: "",
   mobile_city:"",
   mobile:"",
@@ -29,8 +37,7 @@ const handleChange = (e) => {
   setMyInfor({...myInfor, [e.target.name]:e.target.value})
 } 
 
-
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     
     e.preventDefault() // 先阻擋預設送出行為(預設用GET URLencoded)
 
@@ -42,9 +49,9 @@ const handleChange = (e) => {
     const formData = new FormData(e.target)
 
     console.log(
-      formData.get('fullName'),
+      formData.get('member_sid'),
+      formData.get('fullname'),
       formData.get('email'),
-      formData.get('password'),
       formData.get('mobile_city'),
       formData.get('mobile'),
       formData.get('email'),
@@ -59,13 +66,13 @@ const handleChange = (e) => {
 
     // 如果Router已有upload功能，可直接用formdata
     // 送到伺服器(fetch/ajax)
-    fetch('http://localhost:3600/carts/person', {
+    fetch('http://localhost:3600/eventcarts/person', {
       method: 'POST',
       body: fd, //目前送出格式為multiple formdata
     })
       .then(r=>r.json())
       .then(obj=>{
-      console.log(obj)
+      console.log('收到的res',obj);
     })
   
   }
@@ -88,9 +95,18 @@ const handleChange = (e) => {
           </div>
 
         
-          <form onSubmit={handleSubmit}  name="form1"           className='personform'>
+          <form onSubmit={handleSubmit} name="form1" className='personform'>
 
             <div className='infor-left'>
+
+                        {/* 從localStorage獲得membersid，設一個隱藏欄位進fd一起送 */}
+                          <input style={{display: "none"}}
+                              className="input-text" 
+                              name="member_sid" 
+                              type="text" 
+                              id="test-text" 
+                              defaultValue={membersid}
+                              />
 
                           <label htmlFor="test-text">姓名：</label>
                           <input 
@@ -187,7 +203,6 @@ const handleChange = (e) => {
                   type="textarea" id="test-text" placeholder="詳細地址" value={myInfor.address}
                   onChange={handleChange}  />
                   
-
 
                 <button className="btn-m btn-sec" style={{margin:20+"px"}} type="submit">送出資料</button>
                 <button className="btn-m btn-sec" style={{margin:20+"px"}}>重新填寫</button>

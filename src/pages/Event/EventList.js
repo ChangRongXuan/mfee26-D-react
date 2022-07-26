@@ -35,6 +35,7 @@ function EventList() {
 
   // 活動種類 -> select多選 
   const [tags, setTags] = useState([])
+  
   const tagTypes = ['環境', '動保', '長照', '兒少', '身心障礙', '其他']
 
   // 地區種類 -> select多選 
@@ -53,6 +54,7 @@ function EventList() {
 
   // 載入指示的spinner動畫用的
   const [isLoading, setIsLoading] = useState(false)
+
 
   //x秒後自動關掉spinner(設定isLoading為false)
   useEffect(() => {
@@ -99,7 +101,6 @@ function EventList() {
 // start: "2022-07-15T16:00:00.000Z"
 // type_sid: 2
 // value: 50
-
 
 
   //搜尋功能 -> 文字篩選
