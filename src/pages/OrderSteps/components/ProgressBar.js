@@ -1,4 +1,4 @@
-import './ProgressBar.css'
+import '../styles/_progressBar.css';
 
 function ProgressBar(props) {
   const { maxSteps, step, progressNames } = props

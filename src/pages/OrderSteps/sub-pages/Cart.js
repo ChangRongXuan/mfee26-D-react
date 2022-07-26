@@ -20,6 +20,10 @@ const initState = (eventArray) => {
     return state;
     }
 
+
+
+
+
 const Cart = (props) => {
 
     // 透過localStorage 取得登入會員sid 
@@ -36,6 +40,7 @@ const Cart = (props) => {
     useEffect(() => {
     fetchEventShowCart();
     }, [])
+
 
 
     const [eventCart, setEventCart] = useState([]); 
@@ -94,11 +99,11 @@ const Cart = (props) => {
 
 
     //定義 currentPage 這個 state，預設值是 OrderList
-    const [currentPage, setCurrentPage] = useState('OrderList');
+    // const [currentPage, setCurrentPage] = useState('OrderList');
 
     // 待處理：Cart沒有在index.js裡面 數字就不會跳出來
     // 購物車 顯示商品總數量 
-    const { cartNumber, setCartNumber } = props; 
+    const { cartNumber, setCartNumber, eventPick, setEventPick  } = props; 
 
     if (calcTotalNumber()>0){
     setCartNumber(calcTotalNumber());
@@ -120,6 +125,8 @@ return (
                     totalNumber={calcTotalNumber()} 
                     donateNumber={calcDonateNumber()}  
                     volunNumber={calcVolunNumber()} 
+                    eventPick={eventPick}
+                    setEventPick={setEventPick}
                     />
             
                 <Summary 

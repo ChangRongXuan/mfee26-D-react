@@ -3,6 +3,7 @@ import cart_step_1 from "../../imgs/cart-step-1.svg";  //先暫時用老師的
 import scroll_down from "../../imgs/scroll-down.svg";
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
+import { useState } from 'react';
 
 
 import EventItem from "./EventItem";
@@ -11,7 +12,8 @@ import EventItem from "./EventItem";
 function OrderList(props) {
 
     //從Cart.js裡傳來的props
-    const { totalNumber, donateNumber, volunNumber, eventCart, setEventCart } = props 
+    const { totalNumber, donateNumber, volunNumber, eventCart, setEventCart, eventPick, setEventPick } = props;  // 從Cart.js來
+
 
     return (
         <>
@@ -19,8 +21,11 @@ function OrderList(props) {
             <div className="col col-10">
                 {/* 勾選 + 結帳流程圖 */}
                 <div className="all-select-delete">
+                
+                    {/* 勾了: 全選； 不勾: 全不選 */}
                     <input type="checkbox" id="cbox" />
                     <p className="caption">全選({eventCart.length})</p>
+
 
                     <input type="checkbox" id="cbox" />
                     <p className="caption">清空({eventCart.length})</p>
@@ -40,13 +45,15 @@ function OrderList(props) {
                 <div className="cart-list-window">
                     <div className="cart-list-wrap">
 
-                    {/* products來自於JSON檔案 */}
+
                     {eventCart.map((v,i)=>{
-
-
                         return (
                     
-                        <EventItem  
+                        <EventItem 
+
+                            eventPick={eventPick}
+                            setEventPick={setEventPick}
+                        
                             
                             key = {v.sid} 
                             {...v}
@@ -71,12 +78,12 @@ function OrderList(props) {
                                 // 限制最少買一件
                                 // newProductsInorder[i]=newCount<1 ? 1: newCount //更改array中該筆項目數量
                                 
-                                
 
                                 // 3.設定回原本的狀態中
-                                
                                 setEventCart(newEventCart)  //新array取代舊array
                             }}
+
+
 
 
                             // 刪除功能
@@ -88,6 +95,7 @@ function OrderList(props) {
                             }}
 
                             />
+
                         )
 
                         

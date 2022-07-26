@@ -15,61 +15,82 @@ import ProgressBar from './components/ProgressBar';
 
 function OrderSteps(props) {
 
-  const navigate = useNavigate(); 
-  const { cartNumber, setCartNumber } = props; //購物車數字props
-  // const [cartNumber, setCartNumber] = useState('');
 
-  const maxSteps = 4
+    // 透過localStorage 取得登入會員sid 
+    let memberinfor = JSON.parse(localStorage.getItem('auth'));
+    let membersid = Object.values(memberinfor)[1] ;
 
-  const [step, setStep] = useState(1)
+    //取得 勾選要結帳的清單array
+    const [eventPick, setEventPick] = useState([]); 
 
-  const [errors, setErrors] = useState([])
+    //按下「下一步」後在MySQL建立一個新的訂單(綜合體)
+    const fetCreateOrder =  async() =>{
+      fetch('http://localhost:3600/eventcarts/addorder' ,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: `event_order_detail=${eventPick}&member_sid=${membersid}`
+        })
+        .then(r=>r.json())
+        .then(obj=>{
+        console.log(obj)
+        })
+      }; 
+      
 
-  // 狀態的範例，都集中在這裡接收
-  const [cartData, setCartData] = useState([])
+    const navigate = useNavigate(); 
 
-  const [shipping, setShippingData] = useState({
-    name: '',
-    address: '',
-    phone: '',
-  })
+    const { cartNumber, setCartNumber } = props; //購物車數字props
 
-  // 動態元件語法
-  const components = [Cart, Shipping, Payment, OrderDetail]
-  const BlockComponent = components[step - 1]
+    const maxSteps = 4
+    const [step, setStep] = useState(1)
+    const [errors, setErrors] = useState([])
+    const [cartData, setCartData] = useState([])
+    const [shipping, setShippingData] = useState({
+      name: '',
+      address: '',
+      phone: '',
+    })
 
-  // 進度條使用
-  const progressNames = ['購物車', '訂購人資訊', '付款', '報名完成']
+    // 動態元件語法
+    const components = [Cart, Shipping, Payment, OrderDetail]
+    const BlockComponent = components[step - 1]
 
-  // 上一步 下一步按鈕
-  const next = () => {
-    // 運送表單用檢查
-    if (step === 2) {
-      const { name, address, phone } = shipping
+    // 進度條使用
+    const progressNames = ['購物車', '訂購人資訊', '付款', '報名完成']
 
-      // 有錯誤訊息會跳出警告，不會到"下一步"
-      const errors = []
+    // 上一步 下一步按鈕
+    const next = () => {
+      // 運送表單用檢查
+      if (step === 2) {
+        const { name, address, phone } = shipping
 
-      if (!name) errors.push('姓名沒填~ ')
+        // 有錯誤訊息會跳出警告，不會到"下一步"
+        const errors = []
 
-      if (!address) errors.push('住址沒填~ ')
+        // if (!name) errors.push('姓名沒填~ ')
 
-      if (!phone) errors.push('電話沒填~ ')
+        // if (!address) errors.push('住址沒填~ ')
 
-      if (errors.length > 0) {
-        alert(errors.join(','))
-        return
+        // if (!phone) errors.push('電話沒填~ ')
+
+        if (errors.length > 0) {
+          alert(errors.join(','))
+          return
+        }
       }
+
+      // 沒錯誤才會到下一步
+      if (step < maxSteps) setStep(step + 1)
     }
 
-    // 沒錯誤才會到下一步
-    if (step < maxSteps) setStep(step + 1)
-  }
+    // 上一步按鈕
+    const prev = () => {
+      if (step > 1) setStep(step - 1)
+    }
 
-  // 上一步按鈕
-  const prev = () => {
-    if (step > 1) setStep(step - 1)
-  }
+
 
   return (
     <>
@@ -91,6 +112,8 @@ function OrderSteps(props) {
           setShippingData={setShippingData}
           cartNumber={cartNumber}
           setCartNumber={setCartNumber}
+          eventPick={eventPick}
+          setEventPick={setEventPick}
         />
       </div>
 
@@ -111,10 +134,26 @@ function OrderSteps(props) {
           </button>
         ) }
       
-        <button className="btn-m btn-pri" onClick={next} disabled={step === maxSteps}>
+
+        
+        { step===3 ? (
+
+        //填寫完付款資訊後，才會把資訊送進MySQL
+        
+        <button className="btn-m btn-pri" disabled={step === maxSteps} onClick={()=>{
+            next() //進到下一階段
+            fetCreateOrder() //把勾選項目存進MySQL
+        }}>
           下一步
         </button>
+        ):(
 
+        <button className="btn-m btn-pri" disabled={step === maxSteps} onClick={()=>{
+            next() //進到下一階段 
+        }}>
+          下一步
+        </button>
+        )}
       </div>
     </>
   )
