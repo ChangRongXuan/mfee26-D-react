@@ -3,17 +3,16 @@ import Summary from "../components/Summary";
 
 function Shipping(props) {
 
-  const {  myInfor, setMyInfor  } = props; 
+  const { 
+      myInfor,
+      setMyInfor,
+      calcPickNumber, 
+      calcPickPrice, 
+      calcPickDonateNumber, 
+      calcPickDonateTotalPrice, 
+      calcPickVolunNumber, 
+      calcPickVolunTotalPrice  } = props;
 
-
-  // const { shipping, setShippingData } = props
-
-  // const handleFieldChange = (e) => {
-  //   const newShipping = { ...shipping, [e.target.name]: e.target.value }
-  //   setShippingData(newShipping)
-
-  //   console.log(newShipping)
-  // }
 
   return (
     <>
@@ -25,7 +24,14 @@ function Shipping(props) {
                     setMyInfor={setMyInfor}
                   />
 
-                  <Summary />
+                  <Summary 
+                    calcPickNumber={calcPickNumber} //已勾選總數量
+                    calcPickPrice={calcPickPrice} //已勾選總金額
+                    calcPickDonateNumber={calcPickDonateNumber} //已勾選「贊助」總數量
+                    calcPickDonateTotalPrice={calcPickDonateTotalPrice} //已勾選「贊助」總金額
+                    calcPickVolunNumber={calcPickVolunNumber} //已勾選「志工」總數量
+                    calcPickVolunTotalPrice={calcPickVolunTotalPrice} //已勾選「贊助」總金額
+                  />
 
             </div>
       </div>

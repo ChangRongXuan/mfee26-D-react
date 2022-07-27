@@ -12,7 +12,11 @@
 
 /*  -------- Payment --------- */
 
-
+/* ------PersonForm ---------*/
+.error-text{
+  color: #FF52BA;
+  font-size: 16px;
+}
 
 
 /*  -------- OrderDetail ------- */

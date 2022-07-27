@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-
 // 子頁面(區域)
 import Cart from './sub-pages/Cart'; //購物車明細
 import Shipping from './sub-pages/Shipping'; //填寫地址姓名
@@ -13,8 +12,10 @@ import ProgressBar from './components/ProgressBar';
 
 
 
-function OrderSteps(props) {
 
+
+
+function OrderSteps(props) {
 
     // 透過localStorage 取得登入會員sid 
     let memberinfor = JSON.parse(localStorage.getItem('auth'));
@@ -22,8 +23,109 @@ function OrderSteps(props) {
 
     //取得 勾選要結帳的清單array
     const [ eventPick, setEventPick ] = useState([]); 
+    //紀錄 所有被加進購物車的活動 sid
+    const [eventCart, setEventCart] = useState([]); 
 
-    //按下「下一步」後在MySQL建立一個新的訂單(綜合體)
+
+
+
+
+
+
+    // ---------此段處理「已勾選的活動資訊統計」---------------------------------------
+
+
+    // 計算「已勾選」總數量
+    const calcPickNumber = () => {
+      let total = 0;
+      for(let i=0;i<eventPick.length;i++){
+          total++;
+      }
+      return total;
+    }
+
+    // 計算「已勾選」總金額 
+    const calcPickPrice = () => {
+        let total = 0;
+
+        let newEventCart=[]
+        eventPick.forEach(element => 
+            // includes method is only supported on strings or arrays.(所以需要toString()方法)
+            newEventCart = newEventCart.concat(eventCart.filter((v, i) => v.sid.toString().includes(element) ))
+        );
+
+        for(let i=0;i<newEventCart.length;i++){
+            total+= newEventCart[i].price //因為活動數量固定是1，就不特別乘count了
+        }
+        return total;
+    }
+
+    // 計算「已勾選」的「贊助」總數量(活動限定報名1次)
+    const calcPickDonateNumber = () => {
+        let total = 0;
+
+        let newEventCart=[]
+        eventPick.forEach(element => 
+            newEventCart = newEventCart.concat(eventCart.filter((v, i) => v.sid.toString().includes(element) ))
+        );
+
+        for(let i=0;i<newEventCart.length;i++){
+            newEventCart[i].program_type === '贊助' ? total+= 1 : total+=0
+        }
+        return total
+    }
+    // 計算「已勾選」的「贊助」總金額
+    const calcPickDonateTotalPrice = () => {
+        let total = 0;
+
+        let newEventCart=[]
+        eventPick.forEach(element => 
+            newEventCart = newEventCart.concat(eventCart.filter((v, i) => v.sid.toString().includes(element) ))
+        );
+
+        for(let i=0;i<newEventCart.length;i++){
+            newEventCart[i].program_type === '贊助' ? total+= 1 * newEventCart[i].price : total+=0
+        }
+        return total
+    }
+
+    // 計算「已勾選」的「志工」總數量 (活動限定報名1次)
+    const calcPickVolunNumber = () => {
+        let total = 0;
+
+        let newEventCart=[]
+        eventPick.forEach(element => 
+            newEventCart = newEventCart.concat(eventCart.filter((v, i) => v.sid.toString().includes(element) ))
+        );
+
+        for(let i=0;i<newEventCart.length;i++){
+            newEventCart[i].program_type === '志工' ? total+=1 : total+=0
+        }
+        return total
+    }
+    // 計算「已勾選」的「志工」總金額
+    const calcPickVolunTotalPrice = () => {
+        let total = 0;
+
+        let newEventCart=[]
+        eventPick.forEach(element => 
+            newEventCart = newEventCart.concat(eventCart.filter((v, i) => v.sid.toString().includes(element) ))
+        );
+
+        for(let i=0;i<newEventCart.length;i++){
+            newEventCart[i].program_type === '志工' ? total+= 1*newEventCart[i].price : total+=0
+        }
+        return total;
+    }
+
+
+// -------------------------------------------------------------------------------------
+
+
+
+
+
+    //填寫完「付款資訊」後在MySQL建立一個新的訂單(1次付款只會有1個訂單編號))
     const fetCreateOrder =  async() =>{
       fetch('http://localhost:3600/eventcarts/addorder' ,{
         method: 'POST',
@@ -133,8 +235,23 @@ function OrderSteps(props) {
           setEventPick={setEventPick}
           myInfor={myInfor}
           setMyInfor={setMyInfor}
+
+          // 下面這些變數是傳給 Summary 用
+          calcPickNumber={calcPickNumber()} //已勾選總數量
+          calcPickPrice={calcPickPrice()} //已勾選總金額
+          calcPickDonateNumber={calcPickDonateNumber()} //已勾選「贊助」總數量
+          calcPickDonateTotalPrice={calcPickDonateTotalPrice()} //已勾選「贊助」總金額
+          calcPickVolunNumber={calcPickVolunNumber()} //已勾選「志工」總數量
+          calcPickVolunTotalPrice={calcPickVolunTotalPrice()} //已勾選「贊助」總金額
+
+          // 下面這些變數是傳給 Cart.js 的 OrderList用 
+          eventCart={eventCart}
+          setEventCart={setEventCart}
         />
       </div>
+
+
+
 
       {/* 按鈕 */}
       <div className='cart-btn'>

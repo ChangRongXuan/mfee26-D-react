@@ -44,7 +44,7 @@ const Cart = (props) => {
     
 // ---------此段處理「購物車內所有商品的資訊統計」---------------------------------------
 
-    const [eventCart, setEventCart] = useState([]); 
+    const { eventCart, setEventCart } = props;
 
             // 計算總數量
             const calcTotalNumber = () => {
