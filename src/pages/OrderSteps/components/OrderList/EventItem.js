@@ -20,9 +20,8 @@ function EventItem(props) {
     //     limit_num: 50
     // }
 
-
-
-    const {
+    // 部分屬性值是從{...v}裡取得
+    const { 
         sid,
         act_title,
         program_type,
@@ -35,7 +34,6 @@ function EventItem(props) {
         removeItem,
         eventPick,
         setEventPick
-
     } = props;
 
     
@@ -59,16 +57,16 @@ function EventItem(props) {
                                 const newEventPick = eventPick.filter((v,i) => {
                                 return v !== e.target.value
                                 })
-                                console.log('勾選的結帳項目',newEventPick);
+                                console.log('勾選的結帳項目', newEventPick);
                                 setEventPick(newEventPick)
 
 
                             } else { 
 
-                            //如果沒有(false)則新加入array中 ( 拷貝後加入進去) 
-                            const newEventPick = [...eventPick, e.target.value]
-                            console.log('勾選的結帳項目',newEventPick);
-                            setEventPick(newEventPick)
+                                //如果沒有(false)則新加入array中 ( 拷貝後加入進去) 
+                                const newEventPick = [...eventPick, e.target.value]
+                                console.log('勾選的結帳項目', newEventPick);
+                                setEventPick(newEventPick)
                             }
 
                         }}
@@ -93,7 +91,8 @@ function EventItem(props) {
                     <p>{npo_name}</p>
                 </div>
 
-                {/* 活動/贊助限定1場，不提供+- */}
+
+                {/* 活動/贊助限定1場，不提供+-功能 */}
                 <div className="num-choose">
                     {/* <a href="#/" onClick={()=>{setCount(count - 1);}}> 
                     -</a> */}
@@ -102,14 +101,17 @@ function EventItem(props) {
                     +</a> */}
                 </div>
 
+
                 <div className="cost">
                     <h5 className="subtitle">NT${price}</h5>
                 </div>
+
 
                 {/* 建立刪除鍵功能 */}
                 <div className="delete-cross" >
                     <img src={delete_cross} alt="" onClick={removeItem} />
                 </div>
+                
             </div>
         </>
 

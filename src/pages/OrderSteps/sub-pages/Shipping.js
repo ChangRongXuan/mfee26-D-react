@@ -3,6 +3,9 @@ import Summary from "../components/Summary";
 
 function Shipping(props) {
 
+  const {  myInfor, setMyInfor  } = props; 
+
+
   // const { shipping, setShippingData } = props
 
   // const handleFieldChange = (e) => {
@@ -17,7 +20,10 @@ function Shipping(props) {
       <div className="personinfor-container">
             <div className="row">
 
-                  <PersonForm/>
+                  <PersonForm
+                    myInfor={myInfor}
+                    setMyInfor={setMyInfor}
+                  />
 
                   <Summary />
 

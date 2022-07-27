@@ -7,7 +7,9 @@ import '../styles/_cart.css';
 
 
 
-function PersonForm() {
+function PersonForm(props) {
+
+  const { myInfor, setMyInfor } = props; 
 
 
   // 透過localStorage 取得登入會員sid 
@@ -16,17 +18,17 @@ function PersonForm() {
 
 
   // multiple State
-  const [myInfor, setMyInfor] = useState({
-  member_sid: `${membersid}`,
-  fullname: "",
-  mobile_city:"",
-  mobile:"",
-  email:"",
-  gender:"",
-  ID:"",
-  birthday:"",
-  address:""
-})
+//   const [myInfor, setMyInfor] = useState({
+//   member_sid: `${membersid}`,
+//   fullname: "",
+//   mobile_city:"",
+//   mobile:"",
+//   email:"",
+//   gender:"",
+//   ID:"",
+//   birthday:"",
+//   address:""
+// })
 
 
 const genderOptions = ['不提供','男','女']; //選性別使用
@@ -80,9 +82,7 @@ const handleSubmit = (e) => {
   return (
     <>
       <div className="col col-10">
-    
         <div className='person-infor-window'>
-        
           <div className='person-infor-title'>
 
             <div className='title-left'>
@@ -95,6 +95,8 @@ const handleSubmit = (e) => {
           </div>
 
         
+        
+
           <form onSubmit={handleSubmit} name="form1" className='personform'>
 
             <div className='infor-left'>

@@ -3,7 +3,7 @@ import cart_step_1 from "../../imgs/cart-step-1.svg";  //先暫時用老師的
 import scroll_down from "../../imgs/scroll-down.svg";
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 import EventItem from "./EventItem";
@@ -12,7 +12,36 @@ import EventItem from "./EventItem";
 function OrderList(props) {
 
     //從Cart.js裡傳來的props
-    const { totalNumber, donateNumber, volunNumber, eventCart, setEventCart, eventPick, setEventPick } = props;  // 從Cart.js來
+    const { 
+        totalNumber, 
+        donateNumber, 
+        volunNumber, 
+        eventCart, 
+        setEventCart, 
+        eventPick, 
+        setEventPick } = props;  // 從Cart.js來
+
+
+
+    // 在購物車按下"x" 將資料從MySQL刪除  //因為axios方式不熟 先用fetch方式
+
+    // 透過localStorage 取得登入會員sid 
+    let memberinfor = JSON.parse(localStorage.getItem('auth'));
+    let membersid = Object.values(memberinfor)[1] ;
+
+    const  fetchEventDelCart =  async (del_event_sid) => {
+        fetch('http://localhost:3600/eventcarts/deletecart', {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: `event_sid=${del_event_sid}&member_sid=${membersid}`
+        })
+        .then(r=>r.json())
+        .then(obj=>{
+        console.log(obj)
+        })
+    }; 
 
 
     return (
@@ -22,10 +51,25 @@ function OrderList(props) {
                 {/* 勾選 + 結帳流程圖 */}
                 <div className="all-select-delete">
                 
-                    {/* 勾了: 全選； 不勾: 全不選 */}
-                    <input type="checkbox" id="cbox" />
-                    <p className="caption">全選({eventCart.length})</p>
+                    <input 
+                        type="checkbox" 
+                        id="cbox" 
+                        onChange={(e)=>{
 
+                            if( e.target.checked ){
+                                // 按第一次 -> 全勾
+                                let wholeEventPick = []
+                                eventCart.forEach(element => 
+                                    wholeEventPick.push(element.event_sid.toString()) )
+                                setEventPick(wholeEventPick)                           
+                            }else{ 
+                                // 按第二次 -> 全不不勾
+                                setEventPick([])
+                            }
+
+                        }}    
+                        />
+                    <p className="caption">全選({eventCart.length})</p>
 
                     <input type="checkbox" id="cbox" />
                     <p className="caption">清空({eventCart.length})</p>
@@ -33,6 +77,7 @@ function OrderList(props) {
                     <p className="caption">--共{totalNumber}樣商品--</p>
                     <p className="caption">--贊助: {donateNumber}--</p>
                     <p className="caption">--志工: {volunNumber}--</p>
+
 
                     {/* <img src={cart_step_1} alt="" /> */}
                 </div>
@@ -55,44 +100,36 @@ function OrderList(props) {
                             setEventPick={setEventPick}
                         
                             
-                            key = {v.sid} 
+                            key = {v.sid}
+
                             {...v}
 
+                            // 此段參考老師0713-1檔案
                             setCount = {(newCount)=>{
-                                // 處理Array資料三步驟
-
-
-                                // 1.從目前的狀態拷貝出一個新的變數值(Array/Object)
-                                //const newEventCart = [...eventCart]; //[1,1]等不同商品金額array
-                                
-                                // 因為是陣列裡的物件所以要用map(?????)，原本的JSON檔就不是嗎?
                                 const newEventCart = eventCart.map((v2,i2)=>{
                                     if (i2 === i){ 
                                          return { ...v2, count: newCount <1 ? 1: newCount} //點到哪列，該列count才會跳，其他列不被影響
                                     }
                                     return v2;
                                 });
-                                
-                                
-                                // 2.在新的變數值(Array/Object)上做處理
-                                // 限制最少買一件
-                                // newProductsInorder[i]=newCount<1 ? 1: newCount //更改array中該筆項目數量
-                                
-
-                                // 3.設定回原本的狀態中
                                 setEventCart(newEventCart)  //新array取代舊array
                             }}
 
-
-
-
-                            // 刪除功能
+                            // 刪除功能  
                             removeItem={()=>{
+
+                                let del_event_sid = "" ; //用來取得是哪個event_sid被刪除
+                                
                                 const newEventCart = eventCart.filter((v2,i2) => {
-                                    return v.id !== v2.id
+                                    del_event_sid = v2.sid; 
+                                    return v.sid !== v2.sid  //只留沒有點到的
                                 });
-                                setEventCart(newEventCart);
+                                setEventCart(newEventCart); 
+                                fetchEventDelCart(del_event_sid); //同步把MySQL資料刪掉
                             }}
+
+                            // 目前Bug是一次只能刪一個(????)
+                            // 觀察: 要重新整理完後的click才會有效
 
                             />
 

@@ -61,6 +61,7 @@ const EventDetail = () =>  {
   let memberinfor = JSON.parse(localStorage.getItem('auth'));
   let membersid = Object.values(memberinfor)[1] ;
 
+  
   // 按下「加入購物車」將資料存進MySQL //因為axios方式不熟 先用fetch方式POST
   const  fetchEventAddCart =  async () => {
       fetch('http://localhost:3600/eventcarts/addcart', {

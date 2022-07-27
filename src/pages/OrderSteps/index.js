@@ -21,7 +21,7 @@ function OrderSteps(props) {
     let membersid = Object.values(memberinfor)[1] ;
 
     //取得 勾選要結帳的清單array
-    const [eventPick, setEventPick] = useState([]); 
+    const [ eventPick, setEventPick ] = useState([]); 
 
     //按下「下一步」後在MySQL建立一個新的訂單(綜合體)
     const fetCreateOrder =  async() =>{
@@ -38,6 +38,23 @@ function OrderSteps(props) {
         })
       }; 
       
+
+
+    // multiple State  填寫報名活動資訊變數(放最上層，按上下頁時資料才會保留)
+    const [myInfor, setMyInfor] = useState({
+      member_sid: `${membersid}`,
+      fullname: "",
+      mobile_city:"",
+      mobile:"",
+      email:"",
+      gender:"",
+      ID:"",
+      birthday:"",
+      address:""
+  })
+
+
+
 
     const navigate = useNavigate(); 
 
@@ -114,6 +131,8 @@ function OrderSteps(props) {
           setCartNumber={setCartNumber}
           eventPick={eventPick}
           setEventPick={setEventPick}
+          myInfor={myInfor}
+          setMyInfor={setMyInfor}
         />
       </div>
 
