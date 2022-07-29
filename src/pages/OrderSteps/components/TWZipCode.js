@@ -3,18 +3,28 @@ import { countries, postcodes, townships } from '../data/townships';
 import '../../../styles/style.css';
 import '../styles/_cart.css';
 
-function TWZipCode() {
+
+
+
+
+function TWZipCode(props) {
   // 代表目前被選中的縣市的索引值
   // 注意資料類型都是數字(索引值是數字)
   // -1代表目前沒有選中任何的陣列中的值
-  const [countryIndex, setCountryIndex] = useState(-1)
-  const [townshipIndex, setTownshipIndex] = useState(-1)
+  // const [countryIndex, setCountryIndex] = useState(-1)
+  // const [townshipIndex, setTownshipIndex] = useState(-1)
+
+  const { countryIndex, setCountryIndex, townshipIndex, setTownshipIndex, handleChange } = props;
 
   return (
     <>
       <select
+        name="add_city"
         value={countryIndex}
         onChange={(e) => {
+
+          handleChange(e) //可以存入縣市鄉鎮代號(index)
+
           // 注意e.target.value為字串類型(由網頁上傳入都是字串值)
           // 為了保持countryIndex(state狀態)的資料類型都一致相同，所以要轉為數字
           setCountryIndex(Number(e.target.value))
@@ -33,8 +43,10 @@ function TWZipCode() {
         })}
       </select>
       <select
+        name="add_town"
         value={townshipIndex}
         onChange={(e) => {
+          handleChange(e)
           // 注意e.target.value為字串類型(由網頁上傳入都是字串值)
           // 為了保持setTownshipIndex(state狀態)的資料類型都一致相同，所以要轉為數字
           setTownshipIndex(Number(e.target.value))

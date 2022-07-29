@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './layouts/Layout'
 
 // Context元件( 會員登入狀況 + 背景變色 )
-import Container from "./layouts/Context/Container";
+// import Container from "./layouts/Context/Container";
 
 //其他子頁面
 import Home from "./pages/Home";
@@ -14,7 +14,7 @@ import Event from "./pages/Event";
 import EventList from "./pages/Event/EventList";
 import EventDetail from "./pages/EventDetail/EventDetail"; 
 import OrderSteps from "./pages/OrderSteps";
-// import LoginForm from "./pages/LoginForm";
+
 
 
 function Main() {
@@ -25,8 +25,10 @@ function Main() {
         <>
 
             <BrowserRouter>
-                <Container>
+                {/* <Container> */}
                     <Routes>
+
+                        {/* <Container> */}
                             <Route path='/' element={<Layout />}>
                         
                                 {/* 首頁 - 子頁 */}
@@ -49,8 +51,9 @@ function Main() {
                                 />} />
 
                             </Route>
+                        {/* </Container> */}
                     </Routes>
-                </Container>
+                {/* </Container> */}
             </BrowserRouter>
 
         </>

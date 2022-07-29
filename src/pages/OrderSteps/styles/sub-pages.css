@@ -11,6 +11,12 @@
 
 
 /*  -------- Payment --------- */
+.creditcard-container .row{
+    width: 85%;
+    height: 95%;
+    margin: auto;
+  }
+
 
 /* ------PersonForm ---------*/
 .error-text{

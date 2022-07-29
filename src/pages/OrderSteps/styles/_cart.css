@@ -251,3 +251,14 @@
 .title-left{
   width: 80%;
 }
+
+
+/* -------信用卡 CreditCard 的 CSS */
+
+.creditcard-form{
+  outline: 1px solid red;
+  height: 400px;
+  border-radius: 15px;
+  background-color: white;
+}
+

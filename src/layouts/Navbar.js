@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import "../styles/_nav.css";
 
@@ -9,9 +9,15 @@ import { FaBars } from 'react-icons/fa';
 import nav_logo from "../imgs/nav_logo.svg";
 import nav_soul from "../imgs/nav_soul.svg";
 
+// Theme Context測試 
+import ThemeContext, { themes } from "./Context/ThemeContext";
 
 
 const Nav = (props) => {
+
+
+    // Theme Context 測試 
+    const { setTheme }  =  useContext(ThemeContext);
 
     const [lightBox, setLightBox] = useState("lightbox_hidden"); //預設是隱藏
     
@@ -78,6 +84,12 @@ const Nav = (props) => {
                         <FaBars onClick={() => {
                                 setLightBox("lightbox_visible");
                         }}/>
+
+                        <p onClick={()=>{
+                            setTheme(themes.light)}}>亮色</p>
+                            
+                        <p onClick={()=>{
+                            setTheme(themes.dark)}}>暗色</p>
                         
                     </div>
                 </div>

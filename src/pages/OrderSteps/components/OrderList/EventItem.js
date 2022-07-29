@@ -60,7 +60,6 @@ function EventItem(props) {
                                 console.log('勾選的結帳項目', newEventPick);
                                 setEventPick(newEventPick)
 
-
                             } else { 
 
                                 //如果沒有(false)則新加入array中 ( 拷貝後加入進去) 

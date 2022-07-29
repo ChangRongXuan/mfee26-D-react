@@ -1,21 +1,20 @@
 import React  from "react";
 
 export const themes = {
-  dark:{
-    name:'dark',
-    bgc: 'black',
-    fc: 'white',
-  },
+  
+  // 生者模式
   light:{
     name:'light',
     bgc: 'white',
-    fc: 'black',
-  }
+  },
 
+  // 亡者模式
+  dark:{
+    name:'dark',
+    bgc: 'black',
+  }
 }
 
-
-const themeContext = React.createContext(themes.dark); //()內放預設值
-// 目前取得的是dark { } 內的物件
+const themeContext = React.createContext(themes.light); //()內放預設值
 
 export default themeContext;

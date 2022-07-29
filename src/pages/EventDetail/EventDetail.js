@@ -7,11 +7,21 @@ import './_eventdetail.css';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
+
+// Theme useContect實驗
+import ThemeContext, { themes } from "../../layouts/Context/ThemeContext";
+
+
+
 // 處理會員狀態
 import AuthContext from '../../layouts/Context/AuthContext';
 
 
 const EventDetail = () =>  {
+
+
+
+  const themeContext = useContext(ThemeContext);
 
 
 

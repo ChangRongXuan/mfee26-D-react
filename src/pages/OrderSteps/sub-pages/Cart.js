@@ -24,6 +24,10 @@ const initState = (eventArray) => {
 
 const Cart = (props) => {
 
+
+
+
+
 // ---------此段用於「取得該會員購物車有什麼」的資訊--------------------------------------
 
     // 透過localStorage 取得登入會員sid 
